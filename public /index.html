@@ -705,8 +705,42 @@
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.8;
-      margin-bottom: 2.2rem;
+      margin-bottom: 1.2rem;
       font-weight: 300;
+    }
+    .work-desc__full {
+      display: none;
+    }
+    .work-desc.expanded .work-desc__full {
+      display: inline;
+    }
+    .work-desc__cycle {
+      display: block;
+      margin-bottom: 0.7rem;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .work-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
+      margin-bottom: 1.8rem;
+      color: var(--accent-crema);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .work-more .arrow-icon {
+      transition: transform var(--transition);
+    }
+    .work-more.expanded .arrow-icon {
+      transform: rotate(180deg);
     }
 
     .slide-dots {
@@ -1093,7 +1127,12 @@
             <p class="panel__eyebrow">Olio</p>
             <h3 class="panel__title">Arche 2023</h3>
             <p class="panel__sub" lang="it">Olio su tela — 120 x 140 cm</p>
-            <p class="work-desc" lang="it">Indagine pittorica sulle origini e sulla percezione formale.</p>
+            <div class="work-desc" lang="it">
+              <span class="work-desc__cycle">Ciclo E. Severino — 2023</span>
+              <span class="work-desc__short">Il termine greco Archè indica il principio, l'origine o il fondamento.</span>
+              <span class="work-desc__full"> Nella filosofia presocratica rappresenta la ricerca di ciò da cui tutto deriva o del principio che organizza la realtà. Il titolo inserisce l'opera in una dimensione che va oltre il dato visivo: la pittura diventa indagine sull'origine delle forme e sulla possibilità di ricondurre la molteplicità a un principio compositivo.</span>
+            </div>
+            <button class="work-more" type="button" aria-expanded="false"><span>Show more</span><span class="arrow-icon" aria-hidden="true">↓</span></button>
             <div>
               <a class="btn btn--ghost" href="#contatti">Inquire</a>
             </div>
@@ -1110,7 +1149,12 @@
             <p class="panel__eyebrow">Olio</p>
             <h3 class="panel__title">Il ricordo degli eterni</h3>
             <p class="panel__sub" lang="it">Olio su tavola — 100 x 100 cm</p>
-            <p class="work-desc" lang="it">Geometrie rigorose e strati sovrapposti di colore materico.</p>
+            <div class="work-desc" lang="it">
+              <span class="work-desc__cycle">Ciclo E. Severino — 2021</span>
+              <span class="work-desc__short">L'opera mette in relazione memoria ed eternità.</span>
+              <span class="work-desc__full"> Il ricordo appartiene al passato, mentre l'eternità supera il tempo ordinario. Il riferimento a Severino permette di leggere l'opera come riflessione sulla permanenza dell'essere e sul rapporto tra ciò che appare e ciò che scompare nella nostra esperienza quotidiana.</span>
+            </div>
+            <button class="work-more" type="button" aria-expanded="false"><span>Show more</span><span class="arrow-icon" aria-hidden="true">↓</span></button>
             <div>
               <a class="btn btn--ghost" href="#contatti">Inquire</a>
             </div>
@@ -1127,7 +1171,12 @@
             <p class="panel__eyebrow">Grafite</p>
             <h3 class="panel__title">La nascita del mito</h3>
             <p class="panel__sub" lang="it">Grafite su carta — 90 x 120 cm</p>
-            <p class="work-desc" lang="it">Solid workout di segni sovrapposti e texture architettoniche.</p>
+            <div class="work-desc" lang="it">
+              <span class="work-desc__cycle">Ciclo E. Severino — 2024</span>
+              <span class="work-desc__short">Un'opera che indaga il rapporto tra pittura, filosofia e mito.</span>
+              <span class="work-desc__full"> Il riferimento al pensiero di Severino suggerisce una riflessione sulle origini, sull'essere e sul modo in cui l'uomo costruisce le proprie rappresentazioni del mondo. Il mito diventa forma attraverso la quale cercare significato alla realtà, mentre la materia e la frammentazione traducono visivamente questa ricerca.</span>
+            </div>
+            <button class="work-more" type="button" aria-expanded="false"><span>Show more</span><span class="arrow-icon" aria-hidden="true">↓</span></button>
             <div>
               <a class="btn btn--ghost" href="#contatti">Inquire</a>
             </div>
@@ -1144,7 +1193,12 @@
             <p class="panel__eyebrow">Aerografo</p>
             <h3 class="panel__title">Lo squartamento del mito</h3>
             <p class="panel__sub" lang="it">Aerografo su alluminio — 100 x 130 cm</p>
-            <p class="work-desc" lang="it">Sfumature impalpabili e transizioni cromatiche continue.</p>
+            <div class="work-desc" lang="it">
+              <span class="work-desc__cycle">Ciclo E. Severino — 2024</span>
+              <span class="work-desc__short">Il titolo suggerisce separazione, rottura e scomposizione.</span>
+              <span class="work-desc__full"> L'opera può essere letta come tentativo di analizzare il mito nelle sue componenti, mettendo in evidenza le tensioni che lo costituiscono. Il concetto è vicino al procedimento pittorico di Vucemillo: partire da una struttura e trasformarla attraverso la frammentazione.</span>
+            </div>
+            <button class="work-more" type="button" aria-expanded="false"><span>Show more</span><span class="arrow-icon" aria-hidden="true">↓</span></button>
             <div>
               <a class="btn btn--ghost" href="#contatti">Inquire</a>
             </div>
@@ -1265,6 +1319,18 @@
       const slideDotsContainer = document.getElementById('slideDots');
       const noResults = document.getElementById('noResults');
       const cards = Array.from(track.querySelectorAll('.work-card'));
+
+      track.querySelectorAll('.work-more').forEach(button => {
+        button.addEventListener('click', () => {
+          const description = button.previousElementSibling;
+          const expanded = button.getAttribute('aria-expanded') === 'true';
+
+          description.classList.toggle('expanded', !expanded);
+          button.classList.toggle('expanded', !expanded);
+          button.setAttribute('aria-expanded', String(!expanded));
+          button.querySelector('span').textContent = expanded ? 'Show more' : 'Show less';
+        });
+      });
 
       let currentFilter = 'all';
 
