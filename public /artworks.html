@@ -1,0 +1,1460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artworks — #ENRICO.</title>
+<meta name="description" content="The complete artwork collection of Enrico Vucemillo.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-main: #121212;
+  --bg-panel: #181818;
+  --bg-subtle: #222222;
+  --bg-crema-subtle: #262523;
+
+  --text-main: #f5f4f0;
+  --text-muted: #ababab;
+  --text-dim: #7a7975;
+
+  --accent-crema: #e8e4d9;
+  --border-color: #2a2a2a;
+  --border-light: #3d3d3d;
+
+  --font-display: 'Big Shoulders Display', Impact, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --header-height: 85px;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::selection {
+  background-color: var(--accent-crema);
+  color: var(--bg-main);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-crema);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent-crema);
+  outline-offset: 3px;
+}
+
+.icon-inline {
+  width: 19px;
+  height: 19px;
+  vertical-align: middle;
+  display: inline-block;
+  flex-shrink: 0;
+  stroke-width: 1.8;
+  transition: var(--transition);
+}
+
+a:hover .icon-inline,
+button:hover .icon-inline {
+  color: var(--accent-crema);
+  transform: translateY(-1px);
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--accent-crema);
+  width: 0%;
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+}
+
+/* HEADER & NAVIGATION */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4rem;
+  z-index: 100;
+  background: rgba(18, 18, 18, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.menu-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  color: var(--text-main);
+  border-radius: 3px;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.menu-toggle-btn:hover {
+  color: var(--accent-crema);
+  background-color: var(--bg-subtle);
+}
+
+/* SIDEBAR */
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  max-width: 85vw;
+  height: 100%;
+  background-color: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+  z-index: 1600;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 2rem;
+  overflow-y: auto;
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--accent-crema);
+  text-transform: uppercase;
+}
+
+.sidebar-close-btn {
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sidebar-close-btn:hover {
+  color: var(--accent-crema);
+}
+
+.sidebar-section {
+  margin-bottom: 2.5rem;
+}
+
+.sidebar-section-title {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--text-dim);
+  margin-bottom: 1.2rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.sidebar-menu a {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+  color: var(--accent-crema);
+  padding-left: 0.5rem;
+}
+
+.sidebar-count {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-family: var(--font-sans);
+}
+
+/* NAVIGATION LINKS */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.nav a {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.nav a:hover,
+.nav a.active {
+  color: var(--accent-crema);
+}
+
+/* HEADER RIGHT */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+/* SEARCH */
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-box input {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  padding: 0.5rem 2.4rem 0.5rem 1rem;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  width: 150px;
+  transition: var(--transition);
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--accent-crema);
+  width: 210px;
+  background-color: #1a1a1a;
+}
+
+.search-box button {
+  position: absolute;
+  right: 0.7rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* HEADER CTA */
+
+.header-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  color: var(--text-main);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  font-weight: 500;
+}
+
+.header-cta:hover {
+  background-color: var(--accent-crema);
+  color: var(--bg-main);
+  border-color: var(--accent-crema);
+}
+
+/* GENERAL ELEMENTS */
+
+.label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  margin-bottom: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 2.2rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: var(--transition);
+  border-radius: 3px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.btn--solid {
+  background-color: var(--accent-crema);
+  color: var(--bg-main);
+  border: 1px solid var(--accent-crema);
+  font-weight: 600;
+}
+
+.btn--solid:hover {
+  background-color: transparent;
+  color: var(--accent-crema);
+}
+
+.btn--ghost {
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.btn--ghost:hover {
+  border-color: var(--accent-crema);
+  color: var(--accent-crema);
+}
+
+/* ARTWORKS COLLECTION PAGE */
+
+.collection-page {
+  min-height: 100vh;
+  padding: calc(var(--header-height) + 4rem) 4rem 5rem;
+  background: #151515;
+}
+
+.collection-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.collection-heading {
+  margin-bottom: 2.5rem;
+}
+
+.collection-heading h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* TECHNIQUE FILTER TABS */
+
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.8rem;
+}
+
+.filter-tab {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  color: var(--text-muted);
+  background-color: var(--bg-subtle);
+  transition: var(--transition);
+  font-weight: 600;
+}
+
+.filter-tab:hover,
+.filter-tab.active {
+  border-color: var(--accent-crema);
+  color: var(--accent-crema);
+  background-color: rgba(232, 228, 217, 0.05);
+}
+
+/* SLIDER CONTROLS BAR */
+
+.slider-controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.slider-controls-bar.hidden {
+  display: none;
+}
+
+.carousel-counter {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+
+.slider-controls {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.arrow {
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+.arrow:hover:not(:disabled) {
+  border-color: var(--accent-crema);
+  color: var(--accent-crema);
+  background-color: var(--bg-subtle);
+  transform: scale(1.05);
+}
+
+.arrow:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+/* CAROUSEL & GRID CONTAINER */
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.track {
+  position: relative;
+  display: flex;
+  gap: 2.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 1.5rem;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.track.grid-view {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  overflow-x: visible;
+  scroll-snap-type: none;
+  gap: 2rem;
+}
+
+.no-results {
+  display: none;
+  text-align: center;
+  padding: 4rem 1rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.no-results.show {
+  display: block;
+}
+
+.work-card {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 3.5rem;
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  padding: 3rem;
+  border-radius: 4px;
+  transition: var(--transition);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.work-card:hover {
+  border-color: var(--border-light);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.track.grid-view .work-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding: 1.4rem;
+  min-width: 0;
+}
+
+.work-image-wrapper {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  background-color: #0e0e0e;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  cursor: zoom-in;
+}
+
+.track.grid-view .work-image-wrapper {
+  height: 320px;
+  flex: 0 0 auto;
+  padding: 1rem;
+}
+
+.track.grid-view .work-info {
+  flex: 1;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.track.grid-view .work-info .panel__eyebrow {
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.7rem;
+}
+
+.track.grid-view .work-info .panel__title {
+  font-size: 1.9rem;
+  line-height: 1.1;
+  min-height: 2.2em;
+  margin-bottom: 0.6rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.track.grid-view .work-info .panel__sub {
+  font-size: 1rem;
+  min-height: 2.6em;
+  margin-bottom: 1rem;
+  padding-bottom: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.track.grid-view .work-desc {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.track.grid-view .work-info > div:last-child {
+  margin-top: auto;
+}
+
+.work-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-image-wrapper:hover .work-image {
+  transform: scale(1.03);
+}
+
+.work-fallback {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-crema-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+  border: 1px dashed var(--border-light);
+}
+
+.work-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.work-info .panel__eyebrow {
+  color: var(--text-dim);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.work-info .panel__title {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+
+.work-info .panel__sub {
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.2rem;
+  text-transform: uppercase;
+}
+
+.work-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 2.2rem;
+  font-weight: 300;
+}
+
+.slide-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2.5rem;
+}
+
+.slide-dots.hidden {
+  display: none;
+}
+
+.slide-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: var(--border-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.slide-dot.active {
+  background-color: var(--accent-crema);
+  transform: scale(1.3);
+}
+
+/* LIGHTBOX */
+
+.lightbox-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.lightbox-modal.active {
+  display: flex;
+}
+
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 2.5rem;
+  right: 2.5rem;
+  color: var(--text-main);
+  font-size: 2.2rem;
+  background: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lightbox-close:hover {
+  color: var(--accent-crema);
+  transform: scale(1.1);
+}
+
+/* FOOTER */
+
+.site-footer {
+  background-color: var(--bg-main);
+  border-top: 1px solid var(--border-color);
+  padding: 2.2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+.site-footer__brand {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-footer a:hover {
+  color: var(--accent-crema);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .track.grid-view {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    padding: 0 1.5rem;
+  }
+
+  .nav {
+    gap: 1.2rem;
+  }
+
+  .work-card {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    padding: 1.8rem;
+  }
+
+  .work-image-wrapper {
+    height: 340px;
+  }
+}
+
+@media (max-width: 680px) {
+  .track.grid-view {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .collection-page {
+    padding: calc(var(--header-height) + 3rem) 1.2rem 3rem;
+  }
+
+  .site-header {
+    padding: 0 1.2rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-title">#ENRICO.</span>
+    <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu">&times;</button>
+  </div>
+
+  <div class="sidebar-section">
+    <h3 class="sidebar-section-title">Navigation</h3>
+    <ul class="sidebar-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="artworks.html" class="active">Artworks <span class="sidebar-count">16</span></a></li>
+      <li><a href="about.html">Artist Profile</a></li>
+      <li><a href="index.html#contatti">Contact &amp; Info</a></li>
+    </ul>
+  </div>
+
+  <div class="sidebar-section">
+    <h3 class="sidebar-section-title">Techniques</h3>
+    <ul class="sidebar-menu">
+      <li><a href="#" class="sidebar-filter" data-filter="all">All Works <span class="sidebar-count">16</span></a></li>
+      <li><a href="#" class="sidebar-filter" data-filter="olio">Olio <span class="sidebar-count">08</span></a></li>
+      <li><a href="#" class="sidebar-filter" data-filter="grafite">Grafite <span class="sidebar-count">04</span></a></li>
+      <li><a href="#" class="sidebar-filter" data-filter="aerografo">Aerografo <span class="sidebar-count">02</span></a></li>
+      <li><a href="#" class="sidebar-filter" data-filter="pigmenti">Pigmenti <span class="sidebar-count">02</span></a></li>
+    </ul>
+  </div>
+</aside>
+
+<div class="lightbox-modal" id="lightboxModal">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close image">&times;</button>
+  <img class="lightbox-content" id="lightboxImg" src="" alt="Enlarged artwork">
+</div>
+
+<header class="site-header">
+  <div class="header-left">
+    <button type="button" class="menu-toggle-btn" id="menuToggleBtn" aria-label="Open categories menu">
+      <svg class="icon-inline" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+
+    <nav class="nav" aria-label="Main">
+      <a href="artworks.html" class="active">Artworks</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contatti">Contact</a>
+    </nav>
+  </div>
+
+  <div class="header-right">
+    <form class="search-box" onsubmit="event.preventDefault();">
+      <input type="search" id="searchInput" placeholder="Search the site..." aria-label="Search site">
+      <button type="submit" aria-label="Start search">
+        <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+      </button>
+    </form>
+
+    <a class="header-cta" href="index.html#contatti">
+      <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="20" height="16" x="2" y="4" rx="2"/>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </svg>
+      Get in touch
+    </a>
+  </div>
+</header>
+
+<main class="collection-page">
+  <div class="collection-inner">
+
+    <div class="collection-heading">
+      <p class="label">
+        <svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+        Complete Collection
+      </p>
+      <h1>All Artworks</h1>
+    </div>
+
+    <!-- TECHNIQUE FILTER TABS -->
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-tab active" data-filter="all" type="button">All (16)</button>
+      <button class="filter-tab" data-filter="olio" type="button">Olio (8)</button>
+      <button class="filter-tab" data-filter="grafite" type="button">Grafite (4)</button>
+      <button class="filter-tab" data-filter="aerografo" type="button">Aerografo (2)</button>
+      <button class="filter-tab" data-filter="pigmenti" type="button">Pigmenti (2)</button>
+    </div>
+
+    <!-- SLIDER CONTROLS BAR (Hidden on ALL view) -->
+    <div class="slider-controls-bar hidden" id="sliderControlsBar">
+      <div class="carousel-counter" id="carouselCounter">01 / 08</div>
+      <div class="slider-controls">
+        <button class="arrow arrow--prev" id="prev" type="button" aria-label="Previous artwork">
+          <svg class="icon-inline" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button class="arrow arrow--next" id="next" type="button" aria-label="Next artwork">
+          <svg class="icon-inline" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="carousel-container">
+      <div class="track grid-view" id="track">
+
+        <!-- OLIO (8) -->
+        <article class="work-card" id="work-visus" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Visus" loading="lazy">
+            <div class="work-fallback"><span>Visus</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Visus</h3>
+            <p class="panel__sub" lang="it">Olio su tela — 120 x 140 cm</p>
+            <p class="work-desc" lang="it">Indagine pittorica sulle profondità dello sguardo e sulla percezione formale.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-structure-deck" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Structure deck" loading="lazy">
+            <div class="work-fallback"><span>Structure deck</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Structure deck</h3>
+            <p class="panel__sub" lang="it">Olio su tavola — 100 x 100 cm</p>
+            <p class="work-desc" lang="it">Geometrie rigorose e strati sovrapposti di colore materico.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-thierry-de-martel" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Thierry de Martel" loading="lazy">
+            <div class="work-fallback"><span>Thierry de Martel</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Thierry de Martel</h3>
+            <p class="panel__sub" lang="it">Olio su tela — 130 x 150 cm</p>
+            <p class="work-desc" lang="it">Studio di volumi e contrasti luminosi in equilibrio sospeso.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-super" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Super" loading="lazy">
+            <div class="work-fallback"><span>Super</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Super</h3>
+            <p class="panel__sub" lang="it">Olio su tavola — 110 x 110 cm</p>
+            <p class="work-desc" lang="it">Campiture monocrome e tensione percettiva ai confini della forma.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-altum" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Altum" loading="lazy">
+            <div class="work-fallback"><span>Altum</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Altum</h3>
+            <p class="panel__sub" lang="it">Olio su tela — 140 x 180 cm</p>
+            <p class="work-desc" lang="it">Heavy beat ritmico di pennellate dense e profonde.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-heavy-beat" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Heavy Beat" loading="lazy">
+            <div class="work-fallback"><span>Heavy Beat</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Heavy Beat</h3>
+            <p class="panel__sub" lang="it">Olio su tela — 120 x 160 cm</p>
+            <p class="work-desc" lang="it">Variazione cromatica su frequenze visive strutturate.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-intra-fluctus" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Intra fluctus" loading="lazy">
+            <div class="work-fallback"><span>Intra fluctus</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Intra fluctus</h3>
+            <p class="panel__sub" lang="it">Olio su tavola — 100 x 120 cm</p>
+            <p class="work-desc" lang="it">Mind abyss e flussi interni in quiete apparente.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-festina-lente" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Festina lente" loading="lazy">
+            <div class="work-fallback"><span>Festina lente</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Festina lente</h3>
+            <p class="panel__sub" lang="it">Olio su tela — 150 x 150 cm</p>
+            <p class="work-desc" lang="it">Deep serotonality e armonie formali di grande intensità.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <!-- GRAFITE (4) -->
+        <article class="work-card" id="work-urbe" data-category="grafite">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Urbe" loading="lazy">
+            <div class="work-fallback"><span>Urbe</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Grafite</p>
+            <h3 class="panel__title">Urbe</h3>
+            <p class="panel__sub" lang="it">Grafite su carta — 90 x 120 cm</p>
+            <p class="work-desc" lang="it">Solid workout di segni sovrapposti e texture architettoniche.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-mediolanum" data-category="grafite">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Mediolanum" loading="lazy">
+            <div class="work-fallback"><span>Mediolanum</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Grafite</p>
+            <h3 class="panel__title">Mediolanum</h3>
+            <p class="panel__sub" lang="it">Grafite su carta — 100 x 100 cm</p>
+            <p class="work-desc" lang="it">Milano hide and seek attraverso tracciati millimetrici.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-judex" data-category="grafite">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Judex" loading="lazy">
+            <div class="work-fallback"><span>Judex</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Grafite</p>
+            <h3 class="panel__title">Judex</h3>
+            <p class="panel__sub" lang="it">Grafite su tavola preparata — 80 x 110 cm</p>
+            <p class="work-desc" lang="it">Rigore grafico e chiaroscuri di assoluta precisione.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-second-floor" data-category="grafite">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Second floor" loading="lazy">
+            <div class="work-fallback"><span>Second floor</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Grafite</p>
+            <h3 class="panel__title">Second floor</h3>
+            <p class="panel__sub" lang="it">Grafite e carboncino su carta — 100 x 140 cm</p>
+            <p class="work-desc" lang="it">Prospettive mentali e stratificazioni tonali.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <!-- AEROGRAFO (2) -->
+        <article class="work-card" id="work-heart-sequence" data-category="aerografo">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Heart Sequence" loading="lazy">
+            <div class="work-fallback"><span>Heart Sequence</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Aerografo</p>
+            <h3 class="panel__title">Heart Sequence</h3>
+            <p class="panel__sub" lang="it">Aerografo su alluminio — 100 x 130 cm</p>
+            <p class="work-desc" lang="it">Sfumature impalpabili e transizioni cromatiche continue.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-greek-statue-sunrise" data-category="aerografo">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Greek statue at sunrise" loading="lazy">
+            <div class="work-fallback"><span>Greek statue at sunrise</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Aerografo</p>
+            <h3 class="panel__title">Greek statue at sunrise</h3>
+            <p class="panel__sub" lang="it">Aerografo e acrilico su tela — 120 x 150 cm</p>
+            <p class="work-desc" lang="it">Luce radente e volumi classici reinterpretati in chiave contemporanea.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <!-- PIGMENTI (2) -->
+        <article class="work-card" id="work-thats-got-your-back" data-category="pigmenti">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="That’s got your back" loading="lazy">
+            <div class="work-fallback"><span>That’s got your back</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Pigmenti</p>
+            <h3 class="panel__title">That’s got your back</h3>
+            <p class="panel__sub" lang="it">Pigmenti naturali su tela — 130 x 130 cm</p>
+            <p class="work-desc" lang="it">Consistenze terrose e vibrazioni cromatiche pure.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+        <article class="work-card" id="work-cognito" data-category="pigmenti">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/test.jpg" alt="Cognito" loading="lazy">
+            <div class="work-fallback"><span>Cognito</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Pigmenti</p>
+            <h3 class="panel__title">Cognito</h3>
+            <p class="panel__sub" lang="it">Pigmenti minerali su tavola — 100 x 140 cm</p>
+            <p class="work-desc" lang="it">Detox 5 minutes di quiete visiva e sintesi materica.</p>
+            <div><a class="btn btn--ghost" href="index.html#contatti">Inquire</a></div>
+          </div>
+        </article>
+
+      </div>
+      <div class="no-results" id="noResults">No artworks found</div>
+    </div>
+
+    <div class="slide-dots hidden" id="slideDots"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__brand">#ENRICO.</div>
+  <div>&copy; 2026 Enrico Vucemillo. All rights reserved.</div>
+  <div><a href="index.html">Back to home</a></div>
+</footer>
+
+<script src="cms-client.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+      if (window.CMS_READY) await window.CMS_READY;
+
+  /* SCROLL PROGRESS */
+  const progress = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = `${total > 0 ? (window.scrollY / total) * 100 : 0}%`;
+  });
+
+  /* SIDEBAR */
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const menuToggle = document.getElementById('menuToggleBtn');
+  const sidebarClose = document.getElementById('sidebarCloseBtn');
+
+  const closeSidebar = () => {
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+  };
+
+  menuToggle.addEventListener('click', () => {
+    sidebar.classList.add('active');
+    overlay.classList.add('active');
+  });
+
+  sidebarClose.addEventListener('click', closeSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  /* FALLBACK IMMAGINI */
+  document.querySelectorAll('.work-image').forEach(img => {
+    img.addEventListener('error', () => {
+      const fallback = img.nextElementSibling;
+      if (fallback && fallback.classList.contains('work-fallback')) {
+        fallback.style.display = 'flex';
+      }
+      img.style.display = 'none';
+    });
+  });
+
+  /* LIGHTBOX */
+  const modal = document.getElementById('lightboxModal');
+  const modalImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  document.querySelectorAll('.work-image-wrapper').forEach(wrapper => {
+    wrapper.addEventListener('click', () => {
+      const img = wrapper.querySelector('.work-image');
+      if (img && img.style.display !== 'none' && img.src) {
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+        modal.classList.add('active');
+      }
+    });
+  });
+
+  const closeLightbox = () => {
+    modal.classList.remove('active');
+  };
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLightbox();
+      closeSidebar();
+    }
+  });
+
+  /* FILTRI E CAROUSEL / GRID */
+  const track = document.getElementById('track');
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const sidebarFilters = document.querySelectorAll('.sidebar-filter');
+  const sliderControlsBar = document.getElementById('sliderControlsBar');
+  const slideDots = document.getElementById('slideDots');
+  const noResults = document.getElementById('noResults');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const carouselCounter = document.getElementById('carouselCounter');
+
+  let currentFilter = 'all';
+
+  const getAllCards = () => Array.from(track.querySelectorAll('.work-card'));
+
+  const updateDisplay = () => {
+    const cards = getAllCards();
+    let visibleCards = [];
+
+    cards.forEach(card => {
+      const cat = card.getAttribute('data-category');
+      const matchFilter = (currentFilter === 'all' || cat === currentFilter);
+
+      if (matchFilter) {
+        card.style.display = '';
+        visibleCards.push(card);
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (visibleCards.length === 0) {
+      noResults.classList.add('show');
+    } else {
+      noResults.classList.remove('show');
+    }
+
+    if (currentFilter === 'all') {
+      track.classList.add('grid-view');
+      sliderControlsBar.classList.add('hidden');
+      slideDots.classList.add('hidden');
+    } else {
+      track.classList.remove('grid-view');
+      sliderControlsBar.classList.remove('hidden');
+      slideDots.classList.remove('hidden');
+      buildDots(visibleCards);
+      updateCounter();
+    }
+  };
+
+  const buildDots = (visibleCards) => {
+    slideDots.innerHTML = '';
+    visibleCards.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = `slide-dot ${index === 0 ? 'active' : ''}`;
+      dot.setAttribute('type', 'button');
+      dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+      dot.addEventListener('click', () => {
+        visibleCards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      });
+      slideDots.appendChild(dot);
+    });
+  };
+
+  const updateCounter = () => {
+    const visibleCards = getAllCards().filter(c => c.style.display !== 'none');
+    if (visibleCards.length === 0) return;
+
+    const scrollLeft = track.scrollLeft;
+    const cardWidth = visibleCards[0].offsetWidth + 40;
+    const currentIndex = Math.min(visibleCards.length - 1, Math.max(0, Math.round(scrollLeft / cardWidth)));
+
+    carouselCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(visibleCards.length).padStart(2, '0')}`;
+
+    const dots = slideDots.querySelectorAll('.slide-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentIndex);
+    });
+  };
+
+  track.addEventListener('scroll', updateCounter);
+
+  const applyFilter = (filter) => {
+    currentFilter = filter;
+    filterTabs.forEach(tab => {
+      tab.classList.toggle('active', tab.getAttribute('data-filter') === filter);
+    });
+    sidebarFilters.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('data-filter') === filter);
+    });
+    track.scrollTo({ left: 0, behavior: 'instant' });
+    updateDisplay();
+  };
+
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      applyFilter(tab.getAttribute('data-filter'));
+    });
+  });
+
+  sidebarFilters.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      applyFilter(link.getAttribute('data-filter'));
+      closeSidebar();
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    const visibleCards = getAllCards().filter(c => c.style.display !== 'none');
+    const cardWidth = visibleCards[0] ? visibleCards[0].offsetWidth + 40 : 300;
+    track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const visibleCards = getAllCards().filter(c => c.style.display !== 'none');
+    const cardWidth = visibleCards[0] ? visibleCards[0].offsetWidth + 40 : 300;
+    track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+  });
+
+  // Handle direct hash navigation to specific artwork cards (e.g. from search)
+  function jumpToWorkFromHash() {
+    const h = location.hash;
+    if (!h.startsWith('#work-')) return;
+    const card = document.getElementById(h.slice(1));
+    if (!card) return;
+
+    // Check category of this card and filter if needed
+    const cat = card.getAttribute('data-category');
+    if (cat && currentFilter !== 'all' && currentFilter !== cat) {
+      applyFilter(cat);
+    }
+
+    setTimeout(() => {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 150);
+  }
+  window.addEventListener('hashchange', jumpToWorkFromHash);
+  jumpToWorkFromHash();
+
+  updateDisplay();
+});
+</script>
+<script src="search.js"></script>
+</body>
+</html>

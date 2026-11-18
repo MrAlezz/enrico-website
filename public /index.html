@@ -1,0 +1,1567 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>#ENRICO. — Art & Proportion</title>
+  <meta name="description" content="#ENRICO. — The website of Enrico Vucemillo. Works, studies, and proportions: precision is a form of beauty.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       RESET & BASE STYLES & ADVANCED AESTHETICS
+       ========================================================================== */
+    :root {
+      --bg-main: #121212;
+      --bg-panel: #181818;
+      --bg-subtle: #222222;
+      --bg-crema-subtle: #262523;
+      
+      --text-main: #f5f4f0;
+      --text-muted: #ababab;
+      --text-dim: #7a7975;
+      
+      --accent-crema: #e8e4d9;
+      --border-color: #2a2a2a;
+      --border-light: #3d3d3d;
+      
+      --font-display: 'Big Shoulders Display', Impact, sans-serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      --header-height: 85px;
+      --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    ::selection {
+      background-color: var(--accent-crema);
+      color: var(--bg-main);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-light);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-crema);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent-crema);
+      outline-offset: 3px;
+    }
+
+    .icon-inline {
+      width: 19px;
+      height: 19px;
+      vertical-align: middle;
+      display: inline-block;
+      flex-shrink: 0;
+      stroke-width: 1.8;
+      transition: var(--transition);
+    }
+    a:hover .icon-inline, button:hover .icon-inline {
+      color: var(--accent-crema);
+      transform: translateY(-1px);
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background-color: var(--accent-crema);
+      width: 0%;
+      z-index: 1000;
+      transition: width 0.1s ease-out;
+    }
+
+    /* HEADER & NAVIGATION */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      z-index: 100;
+      background: rgba(18, 18, 18, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .menu-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      color: var(--text-main);
+      border-radius: 3px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .menu-toggle-btn:hover {
+      color: var(--accent-crema);
+      background-color: var(--bg-subtle);
+    }
+
+    /* SIDEBAR CATEGORIES */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 1500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 320px;
+      max-width: 85vw;
+      height: 100%;
+      background-color: var(--bg-panel);
+      border-right: 1px solid var(--border-color);
+      z-index: 1600;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 2rem;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--accent-crema);
+      text-transform: uppercase;
+    }
+
+    .sidebar-close-btn {
+      color: var(--text-muted);
+      font-size: 1.8rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .sidebar-close-btn:hover {
+      color: var(--accent-crema);
+    }
+
+    .sidebar-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .sidebar-section-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--text-dim);
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .sidebar-menu a {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+    }
+
+    .sidebar-menu a:hover, .sidebar-menu a.active {
+      color: var(--accent-crema);
+      padding-left: 0.5rem;
+    }
+
+    .sidebar-count {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-family: var(--font-sans);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .nav a {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav a:hover, .nav a.active {
+      color: var(--accent-crema);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box input {
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      padding: 0.5rem 2.4rem 0.5rem 1rem;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      width: 150px;
+      transition: var(--transition);
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent-crema);
+      width: 210px;
+      background-color: #1a1a1a;
+    }
+
+    .search-box button {
+      position: absolute;
+      right: 0.7rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      color: var(--text-main);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      font-weight: 500;
+    }
+
+    .header-cta:hover {
+      background-color: var(--accent-crema);
+      color: var(--bg-main);
+      border-color: var(--accent-crema);
+    }
+
+    .dots {
+      position: fixed;
+      right: 2.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      z-index: 90;
+    }
+
+    .dots a {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--border-light);
+      transition: var(--transition);
+    }
+
+    .dots a.active, .dots a:hover {
+      background-color: var(--accent-crema);
+      transform: scale(1.5);
+    }
+
+    section {
+      min-height: 100vh;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 4rem;
+    }
+
+    .label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.8rem 2.2rem;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: var(--transition);
+      border-radius: 3px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    .btn--solid {
+      background-color: var(--accent-crema);
+      color: var(--bg-main);
+      border: 1px solid var(--accent-crema);
+      font-weight: 600;
+    }
+
+    .btn--solid:hover {
+      background-color: transparent;
+      color: var(--accent-crema);
+    }
+
+    .btn--ghost {
+      border: 1px solid var(--border-light);
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .btn--ghost:hover {
+      border-color: var(--accent-crema);
+      color: var(--accent-crema);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 12%;
+    }
+
+    .hero .bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 65%;
+      height: 100%;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .scrim {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 25% 50%, transparent 10%, rgba(18,18,18,0.92) 80%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+    }
+
+    .panel__eyebrow {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .panel__title--xl {
+      font-family: var(--font-display);
+      font-size: 5.5rem;
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -1px;
+      margin-bottom: 1.8rem;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .panel__sub--serif {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1.8rem;
+    }
+
+    .section-opere {
+      flex-direction: column;
+      justify-content: center;
+      background-color: #151515;
+      padding-top: 8rem;
+    }
+
+    .opere-header {
+      width: 100%;
+      max-width: 1240px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .opere-title-group h2 {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 700;
+      letter-spacing: 0px;
+      text-transform: uppercase;
+    }
+
+    .slider-controls {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .view-toggle-btn {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      color: var(--text-muted);
+      margin-right: 1rem;
+      transition: var(--transition);
+      font-weight: 700;
+    }
+    .view-toggle-btn:hover {
+      border-color: var(--accent-crema);
+      color: var(--accent-crema);
+      background-color: var(--bg-subtle);
+    }
+
+    .arrow {
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--border-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      transition: var(--transition);
+    }
+
+    .arrow:hover:not(:disabled) {
+      border-color: var(--accent-crema);
+      color: var(--accent-crema);
+      background-color: var(--bg-subtle);
+      transform: scale(1.05);
+    }
+
+    .arrow:disabled {
+      opacity: 0.2;
+      cursor: not-allowed;
+    }
+
+    .carousel-container {
+      width: 100%;
+      max-width: 1240px;
+      overflow: hidden;
+    }
+
+    .track {
+      position: relative;
+      display: flex;
+      gap: 2.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 1.5rem;
+    }
+
+    .track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .track.grid-view {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      overflow-x: visible;
+      scroll-snap-type: none;
+      gap: 2rem;
+    }
+
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 4rem 1rem;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .no-results.show {
+      display: block;
+    }
+
+    .work-card {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 3.5rem;
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      padding: 3rem;
+      border-radius: 4px;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .work-card:hover {
+      border-color: var(--border-light);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    /* Grid view: equal-height cards, same image box, titles/buttons aligned */
+    .track.grid-view .work-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      padding: 1.4rem;
+      min-width: 0;
+    }
+
+    .work-image-wrapper {
+      position: relative;
+      height: 500px;
+      width: 100%;
+      background-color: #0e0e0e;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      cursor: zoom-in;
+    }
+
+    .track.grid-view .work-image-wrapper {
+      height: 320px;
+      flex: 0 0 auto;
+      padding: 1rem;
+    }
+
+    .track.grid-view .work-info {
+      flex: 1;
+      justify-content: flex-start;
+      min-width: 0;
+    }
+
+    .track.grid-view .work-info .panel__eyebrow {
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.7rem;
+    }
+
+    .track.grid-view .work-info .panel__title {
+      font-size: 1.9rem;
+      line-height: 1.1;
+      min-height: 2.2em;
+      margin-bottom: 0.6rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .track.grid-view .work-info .panel__sub {
+      font-size: 1rem;
+      min-height: 2.6em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.9rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .track.grid-view .work-desc {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .track.grid-view .work-info > div:last-child {
+      margin-top: auto;
+    }
+
+    .work-image {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .work-image-wrapper:hover .work-image {
+      transform: scale(1.03);
+    }
+
+    .work-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-crema-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 2rem;
+      border: 1px dashed var(--border-light);
+    }
+
+    .work-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .work-info .panel__eyebrow {
+      color: var(--text-dim);
+    }
+
+    .work-info .panel__title {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .work-info .panel__sub {
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      margin-bottom: 1.8rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .work-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 2.2rem;
+      font-weight: 300;
+    }
+
+    .slide-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-top: 2.5rem;
+    }
+    .slide-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background-color: var(--border-light);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .slide-dot.active {
+      background-color: var(--accent-crema);
+      transform: scale(1.3);
+    }
+
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+    }
+    .lightbox-modal.active {
+      display: flex;
+    }
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      color: var(--text-main);
+      font-size: 2.2rem;
+      background: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .lightbox-close:hover {
+      color: var(--accent-crema);
+      transform: scale(1.1);
+    }
+
+    .contact {
+      background-color: var(--bg-panel);
+    }
+
+    .contact__inner {
+      max-width: 1050px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4.5rem;
+    }
+
+    .contact__title {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .contact__copy {
+      color: var(--text-muted);
+      margin-bottom: 2.2rem;
+      font-weight: 300;
+    }
+
+    .contact__list {
+      margin-top: 2.2rem;
+    }
+
+    .contact__row {
+      margin-bottom: 1.8rem;
+    }
+
+    .contact__row dt {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact__row dd {
+      font-size: 1.15rem;
+      color: var(--accent-crema);
+      margin-top: 0.2rem;
+    }
+
+    .copy-email-btn {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      margin-left: 0.8rem;
+      text-decoration: underline;
+      transition: var(--transition);
+    }
+    .copy-email-btn:hover {
+      color: var(--accent-crema);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      padding: 0.9rem 1.1rem;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      border-radius: 3px;
+      transition: var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-crema);
+      background-color: #1c1c1c;
+      box-shadow: 0 0 10px rgba(232, 228, 217, 0.05);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      background-color: var(--accent-crema);
+      color: var(--bg-main);
+      padding: 1.1rem 1.8rem;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+      transform: translateY(120px);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 3000;
+      text-transform: uppercase;
+    }
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .site-footer {
+      background-color: var(--bg-main);
+      border-top: 1px solid var(--border-color);
+      padding: 2.2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      color: var(--text-dim);
+    }
+
+    .site-footer__brand {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+    }
+
+    .site-footer a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .site-footer a:hover {
+      color: var(--accent-crema);
+    }
+
+    @media (max-width: 900px) {
+      .site-header {
+        padding: 0 1.5rem;
+      }
+      .nav {
+        gap: 1.2rem;
+      }
+      .panel__title--xl {
+        font-size: 3.6rem;
+      }
+      .work-card {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+        padding: 1.8rem;
+      }
+      .work-image-wrapper {
+        height: 340px;
+      }
+      .contact__inner {
+        grid-template-columns: 1fr;
+        gap: 2.8rem;
+      }
+      .dots {
+        display: none;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .track.grid-view { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      .track.grid-view { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- OVERLAY AND SIDEBAR -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">#ENRICO.</span>
+      <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu">&times;</button>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-section-title">Navigation</h3>
+      <ul class="sidebar-menu">
+        <li><a href="#top">Home</a></li>
+        <li><a href="artworks.html">All Artworks</a></li>
+        <li><a href="about.html">Artist Profile</a></li>
+        <li><a href="#contatti">Contact & Info</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close image">&times;</button>
+    <img class="lightbox-content" id="lightboxImg" src="" alt="Enlarged artwork">
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="site-header">
+    <div class="header-left">
+      <button type="button" class="menu-toggle-btn" id="menuToggleBtn" aria-label="Open categories menu">
+        <svg class="icon-inline" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <nav class="nav" aria-label="Main">
+        <a href="artworks.html">Artworks</a>
+        <a href="about.html">About</a>
+        <a href="#contatti">Contact</a>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <form class="search-box" onsubmit="event.preventDefault();">
+        <input type="search" id="searchInput" placeholder="Search the site..." aria-label="Search site">
+        <button type="submit" aria-label="Start search">
+          <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+      </form>
+
+      <a class="header-cta" href="#contatti">
+        <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Get in touch
+      </a>
+    </div>
+  </header>
+
+  <!-- NAVIGATION DOTS -->
+  <nav class="dots" aria-label="Sections">
+    <a href="#top" aria-label="Home" class="active"></a>
+    <a href="#opere" aria-label="Artworks"></a>
+    <a href="#contatti" aria-label="Contact"></a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero snap" id="top">
+    <svg class="bg" viewBox="0 0 610 377" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Golden Ratio Geometry">
+      <rect x="0" y="0" width="377" height="377" fill="#1c1c1c"/>
+      <rect x="377" y="0" width="233" height="233" fill="#262626"/>
+      <rect x="466" y="233" width="144" height="144" fill="#303030"/>
+      <rect x="377" y="288" width="89" height="89" fill="#3a3a3a"/>
+      <rect x="377" y="233" width="55" height="55" fill="#181818"/>
+      <rect x="432" y="233" width="34" height="34" fill="#444444"/>
+      <g fill="none" stroke="#555555" stroke-width="0.5">
+        <rect x="0" y="0" width="377" height="377"/>
+        <rect x="377" y="0" width="233" height="233"/>
+        <rect x="466" y="233" width="144" height="144"/>
+        <rect x="377" y="288" width="89" height="89"/>
+      </g>
+      <path d="M0,377 A377,377 0 0 1 377,0 A233,233 0 0 1 610,233 A144,144 0 0 1 466,377 A89,89 0 0 1 377,288" fill="none" stroke="#e8e4d9" stroke-width="0.8" opacity="0.6"/>
+    </svg>
+    <div class="scrim"></div>
+    <div class="hero-content">
+      <p class="panel__eyebrow">
+        <span>Art Portfolio — EGO PHISIS</span>
+      </p>
+      <h1 class="panel__title--xl">#ENRICO.</h1>
+      <p class="panel__sub--serif" lang="it">EGO PHISIS</p>
+      <div class="hero-cta-group">
+        <a class="btn btn--solid" href="artworks.html">
+          <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+          View Artworks
+        </a>
+        <a class="btn btn--ghost" href="about.html">
+          <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          About #ENRICO.
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTWORKS -->
+  <section class="section-opere" id="opere">
+    <div class="opere-header">
+      <div class="opere-title-group">
+        <p class="label">
+          <svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+          Collection
+        </p>
+        <h2>Selected Works</h2>
+      </div>
+      <div class="slider-controls">
+        <button class="view-toggle-btn" id="viewToggleBtn" type="button">Grid View</button>
+        <button class="arrow arrow--prev" id="prev" type="button" aria-label="Previous artwork">
+          <svg class="icon-inline" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button class="arrow arrow--next" id="next" type="button" aria-label="Next artwork">
+          <svg class="icon-inline" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="carousel-container">
+      <div class="track" id="track">
+        
+        <!-- OPERA 1 -->
+        <article class="work-card" id="work-arche-2023" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/Arche 2023.webp" alt="Arche 2023" loading="lazy">
+            <div class="work-fallback"><span>Arche 2023</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Arche 2023</h3>
+            <p class="panel__sub" lang="it">Olio su tela — 120 x 140 cm</p>
+            <p class="work-desc" lang="it">Indagine pittorica sulle origini e sulla percezione formale.</p>
+            <div>
+              <a class="btn btn--ghost" href="#contatti">Inquire</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- OPERA 2 -->
+        <article class="work-card" id="work-il-ricordo-degli-eterni" data-category="olio">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/Il ricordo degli eterni.webp" alt="Il ricordo degli eterni" loading="lazy">
+            <div class="work-fallback"><span>Il ricordo degli eterni</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Olio</p>
+            <h3 class="panel__title">Il ricordo degli eterni</h3>
+            <p class="panel__sub" lang="it">Olio su tavola — 100 x 100 cm</p>
+            <p class="work-desc" lang="it">Geometrie rigorose e strati sovrapposti di colore materico.</p>
+            <div>
+              <a class="btn btn--ghost" href="#contatti">Inquire</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- OPERA 3 -->
+        <article class="work-card" id="work-la-nascita-del-mito" data-category="grafite">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/La nascita del mito.webp" alt="La nascita del mito" loading="lazy">
+            <div class="work-fallback"><span>La nascita del mito</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Grafite</p>
+            <h3 class="panel__title">La nascita del mito</h3>
+            <p class="panel__sub" lang="it">Grafite su carta — 90 x 120 cm</p>
+            <p class="work-desc" lang="it">Solid workout di segni sovrapposti e texture architettoniche.</p>
+            <div>
+              <a class="btn btn--ghost" href="#contatti">Inquire</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- OPERA 4 -->
+        <article class="work-card" id="work-lo-squartamento-del-mito" data-category="aerografo">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="Images/Lo squartamento del Mito.webp" alt="Lo squartamento del mito" loading="lazy">
+            <div class="work-fallback"><span>Lo squartamento del mito</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">Aerografo</p>
+            <h3 class="panel__title">Lo squartamento del mito</h3>
+            <p class="panel__sub" lang="it">Aerografo su alluminio — 100 x 130 cm</p>
+            <p class="work-desc" lang="it">Sfumature impalpabili e transizioni cromatiche continue.</p>
+            <div>
+              <a class="btn btn--ghost" href="#contatti">Inquire</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <div class="no-results" id="noResults">No artworks found</div>
+    </div>
+
+    <div class="slide-dots" id="slideDots"></div>
+    <a class="btn btn--solid" href="artworks.html" style="margin-top:2.5rem;">View all artworks</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contatti">
+    <div class="contact__inner">
+      <div>
+        <h2 class="contact__title">Contact</h2>
+        <p class="contact__copy">For information regarding available artworks, acquisitions, collaborations, or exhibitions, send a message or use the contact details below.</p>
+
+        <dl class="contact__list">
+          <div class="contact__row">
+            <dt>
+              <svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Direct Email
+            </dt>
+            <dd>
+              <span id="emailText">info@enricovucemillo.art</span>
+              <button type="button" class="copy-email-btn" id="copyEmailBtn">Copy</button>
+            </dd>
+          </div>
+          <div class="contact__row">
+            <dt>
+              <svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Studio
+            </dt>
+            <dd>By appointment only</dd>
+          </div>
+        </dl>
+      </div>
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-group">
+          <label for="name">Name / Organization</label>
+          <input type="text" id="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required placeholder="your-email@example.com">
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" required placeholder="Describe your request or inquiry..."></textarea>
+        </div>
+        <button class="btn btn--solid" type="submit" style="margin-top: 0.5rem;">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer__brand">#ENRICO.</div>
+    <div>&copy; 2026 Enrico Vucemillo. All rights reserved.</div>
+    <div>
+      <a href="#top">
+        Back to top 
+        <svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT FOR INTERACTIVITY -->
+  <script src="cms-client.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.CMS_READY) await window.CMS_READY;
+      // 1. SCROLL PROGRESS BAR
+      const scrollProgress = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+        scrollProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+      });
+
+      // 2. HIGHLIGHT DOTS & HEADER LINKS ON SCROLL
+      const dotLinks = document.querySelectorAll('.dots a');
+      const navLinks = document.querySelectorAll('.nav a');
+
+      window.addEventListener('scroll', () => {
+        let current = 'top';
+        const scrollPos = window.scrollY + 200;
+
+        document.querySelectorAll('section').forEach(section => {
+          if (scrollPos >= section.offsetTop) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        dotLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+        });
+
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+        });
+      });
+
+      // 3. ARTWORK CAROUSEL, FILTERS & DOT INDICATORS
+      const track = document.getElementById('track');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+      const slideDotsContainer = document.getElementById('slideDots');
+      const noResults = document.getElementById('noResults');
+      const cards = Array.from(track.querySelectorAll('.work-card'));
+
+      let currentFilter = 'all';
+      let isGridView = false;
+
+      function getVisibleCards() {
+        return cards.filter(card => card.style.display !== 'none');
+      }
+
+      function getStep() {
+        const visible = getVisibleCards();
+        if (!visible.length) return 0;
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 40;
+        return visible[0].offsetWidth + gap;
+      }
+
+      function buildDots() {
+        slideDotsContainer.innerHTML = '';
+        getVisibleCards().forEach((_, idx) => {
+          const dot = document.createElement('div');
+          dot.classList.add('slide-dot');
+          dot.addEventListener('click', () => {
+            if (!isGridView) {
+              track.scrollTo({ left: getStep() * idx, behavior: 'smooth' });
+            }
+          });
+          slideDotsContainer.appendChild(dot);
+        });
+      }
+
+      function updateCarouselControls() {
+        if (isGridView) return;
+        const step = getStep();
+        const dots = Array.from(slideDotsContainer.children);
+
+        if (!step) {
+          prevBtn.disabled = true;
+          nextBtn.disabled = true;
+          return;
+        }
+
+        const activeIndex = Math.round(track.scrollLeft / step);
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === activeIndex);
+        });
+
+        prevBtn.disabled = track.scrollLeft <= 10;
+        nextBtn.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 10;
+      }
+
+      function applyFilters() {
+        cards.forEach(card => {
+          const matchesCategory = currentFilter === 'all' || card.getAttribute('data-category') === currentFilter;
+          card.style.display = matchesCategory ? '' : 'none';
+        });
+
+        const visibleCount = getVisibleCards().length;
+        noResults.classList.toggle('show', visibleCount === 0);
+
+        track.scrollTo({ left: 0, behavior: 'auto' });
+        buildDots();
+        updateCarouselControls();
+      }
+
+      nextBtn.addEventListener('click', () => {
+        track.scrollBy({ left: getStep(), behavior: 'smooth' });
+      });
+
+      prevBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -getStep(), behavior: 'smooth' });
+      });
+
+      track.addEventListener('scroll', updateCarouselControls);
+      window.addEventListener('resize', updateCarouselControls);
+      buildDots();
+      updateCarouselControls();
+
+      // 4. TOGGLE GRID / CAROUSEL VIEW
+      const viewToggleBtn = document.getElementById('viewToggleBtn');
+
+      viewToggleBtn.addEventListener('click', () => {
+        isGridView = !isGridView;
+        track.classList.toggle('grid-view', isGridView);
+        viewToggleBtn.textContent = isGridView ? 'Carousel View' : 'Grid View';
+
+        prevBtn.style.display = isGridView ? 'none' : 'flex';
+        nextBtn.style.display = isGridView ? 'none' : 'flex';
+        slideDotsContainer.style.display = isGridView ? 'none' : 'flex';
+
+        if (!isGridView) {
+          track.scrollTo({ left: 0, behavior: 'auto' });
+          updateCarouselControls();
+        }
+      });
+
+      // 5. SIDEBAR CATEGORIES
+      const menuToggleBtn = document.getElementById('menuToggleBtn');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+
+      function openSidebar() {
+        sidebar.classList.add('active');
+        sidebarOverlay.classList.add('active');
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+      }
+
+      menuToggleBtn.addEventListener('click', openSidebar);
+      sidebarCloseBtn.addEventListener('click', closeSidebar);
+      sidebarOverlay.addEventListener('click', closeSidebar);
+
+      sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
+      });
+
+      // 6. JUMP TO AN ARTWORK FROM A LINK / SEARCH RESULT (#work-...)
+      function goToWorkFromHash() {
+        const h = location.hash;
+        if (!h.startsWith('#work-')) return;
+        const card = document.getElementById(h.slice(1));
+        if (!card) return;
+
+        if (card.style.display === 'none') {
+          currentFilter = 'all';
+          filterLinks.forEach(l => l.classList.toggle('active', l.getAttribute('data-filter') === 'all'));
+          applyFilters();
+        }
+
+        document.getElementById('opere').scrollIntoView({ behavior: 'smooth' });
+        if (isGridView) {
+          setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 350);
+        } else {
+          track.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+        }
+      }
+      window.addEventListener('hashchange', goToWorkFromHash);
+      goToWorkFromHash();
+
+      // 7. LIGHTBOX IMAGE ZOOM
+      const lightboxModal = document.getElementById('lightboxModal');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxClose = document.getElementById('lightboxClose');
+
+      function closeLightbox() {
+        lightboxModal.classList.remove('active');
+      }
+
+      document.querySelectorAll('.work-image-wrapper').forEach(wrapper => {
+        wrapper.addEventListener('click', () => {
+          const img = wrapper.querySelector('.work-image');
+          if (img && img.src && img.style.display !== 'none') {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightboxModal.classList.add('active');
+          }
+        });
+      });
+
+      lightboxClose.addEventListener('click', closeLightbox);
+
+      lightboxModal.addEventListener('click', (e) => {
+        if (e.target === lightboxModal) closeLightbox();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeLightbox();
+          closeSidebar();
+        }
+      });
+
+      document.querySelectorAll('.work-image').forEach(img => {
+        img.addEventListener('error', () => {
+          img.style.display = 'none';
+          const fallback = img.nextElementSibling;
+          if (fallback && fallback.classList.contains('work-fallback')) {
+            fallback.style.display = 'flex';
+          }
+        });
+      });
+
+      // 8. COPY EMAIL & CONTACT FORM WITH TOAST
+      const toast = document.getElementById('toast');
+      let toastTimer;
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3500);
+      }
+
+      const copyEmailBtn = document.getElementById('copyEmailBtn');
+      const emailText = document.getElementById('emailText').textContent;
+
+      copyEmailBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(emailText).then(() => {
+          showToast('Email address copied!');
+        }).catch(() => {
+          showToast('Email: ' + emailText);
+        });
+      });
+
+      const contactForm = document.getElementById('contactForm');
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        const subject = encodeURIComponent('Inquiry from ' + name);
+        const body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+
+        showToast('Opening your email app...');
+        window.location.href = `mailto:${emailText}?subject=${subject}&body=${body}`;
+        contactForm.reset();
+      });
+    });
+  </script>
+  <script src="search.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+{
+  "site": {
+    "homeTitle": "#ENRICO.",
+    "homeSubtitle": "Art & Proportion",
+    "aboutName": "#ENRICO.",
+    "aboutBio": [
+      "Enrico Vucemillo, conosciuto nel mondo artistico anche con il nome di Vuce , è un artista italiano che opera nell'ambito della pittura contemporanea, con una ricerca che si colloca tra astrazione, figurazione, sperimentazione materica e riflessione filosofica.",
+      "Nato a Padova il 22 febbraio 1962, ha sviluppato il proprio percorso tra Italia e Germania, maturando una formazione che unisce architettura, disegno, progettazione e arti visive. La sua attività è legata anche a Merano, città nella quale ha sviluppato una parte importante della propria esperienza artistica.",
+      "La sua produzione si distingue per l'utilizzo di materiali differenti, per la stratificazione delle superfici e per un processo creativo che parte spesso dalla memoria e dall'esperienza personale. L'immagine iniziale non viene semplicemente riprodotta: viene scomposta, modificata, rielaborata e trasformata in una nuova realtà visiva."
+    ],
+    "contactEmail": "info@enricovucemillo.art",
+    "footerCopyright": "© 2026 Enrico Vucemillo. All rights reserved."
+  },
+  "works": [
+    {
+      "id": "work-visus",
+      "title": "Visus",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tela — 120 x 140 cm",
+      "description": "Indagine pittorica sulle profondità dello sguardo e sulla percezione formale.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-structure-deck",
+      "title": "Structure deck",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tavola — 100 x 100 cm",
+      "description": "Geometrie rigorose e strati sovrapposti di colore materico.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-thierry-de-martel",
+      "title": "Thierry de Martel",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tela — 130 x 150 cm",
+      "description": "Studio di volumi e contrasti luminosi in equilibrio sospeso.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-super",
+      "title": "Super",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tavola — 110 x 110 cm",
+      "description": "Campiture monocrome e tensione percettiva ai confini della forma.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-altum",
+      "title": "Altum",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tela — 140 x 180 cm",
+      "description": "Heavy beat ritmico di pennellate dense e profonde.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-heavy-beat",
+      "title": "Heavy Beat",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tela — 120 x 160 cm",
+      "description": "Variazione cromatica su frequenze visive strutturate.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-intra-fluctus",
+      "title": "Intra fluctus",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tavola — 100 x 120 cm",
+      "description": "Mind abyss e flussi interni in quiete apparente.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-festina-lente",
+      "title": "Festina lente",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tela — 150 x 150 cm",
+      "description": "Deep serotonality e armonie formali di grande intensità.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-urbe",
+      "title": "Urbe",
+      "category": "grafite",
+      "technique": "Grafite",
+      "details": "Grafite su carta — 90 x 120 cm",
+      "description": "Solid workout di segni sovrapposti e texture architettoniche.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-mediolanum",
+      "title": "Mediolanum",
+      "category": "grafite",
+      "technique": "Grafite",
+      "details": "Grafite su carta — 100 x 100 cm",
+      "description": "Milano hide and seek attraverso tracciati millimetrici.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-judex",
+      "title": "Judex",
+      "category": "grafite",
+      "technique": "Grafite",
+      "details": "Grafite su tavola preparata — 80 x 110 cm",
+      "description": "Rigore grafico e chiaroscuri di assoluta precisione.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-second-floor",
+      "title": "Second floor",
+      "category": "grafite",
+      "technique": "Grafite",
+      "details": "Grafite e carboncino su carta — 100 x 140 cm",
+      "description": "Prospettive mentali e stratificazioni tonali.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-heart-sequence",
+      "title": "Heart Sequence",
+      "category": "aerografo",
+      "technique": "Aerografo",
+      "details": "Aerografo su alluminio — 100 x 130 cm",
+      "description": "Sfumature impalpabili e transizioni cromatiche continue.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-greek-statue-sunrise",
+      "title": "Greek statue at sunrise",
+      "category": "aerografo",
+      "technique": "Aerografo",
+      "details": "Aerografo e acrilico su tela — 120 x 150 cm",
+      "description": "Luce radente e volumi classici reinterpretati in chiave contemporanea.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-thats-got-your-back",
+      "title": "That’s got your back",
+      "category": "pigmenti",
+      "technique": "Pigmenti",
+      "details": "Pigmenti naturali su tela — 130 x 130 cm",
+      "description": "Consistenze terrose e vibrazioni cromatiche pure.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-cognito",
+      "title": "Cognito",
+      "category": "pigmenti",
+      "technique": "Pigmenti",
+      "details": "Pigmenti minerali su tavola — 100 x 140 cm",
+      "description": "Detox 5 minutes di quiete visiva e sintesi materica.",
+      "image": "Images/test.jpg",
+      "visible": true
+    },
+    {
+      "id": "work-arche-2023",
+      "title": "Arche 2023",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tela — 120 x 140 cm",
+      "description": "Indagine pittorica sulle origini e sulla percezione formale.",
+      "image": "Images/Arche 2023.webp",
+      "visible": true
+    },
+    {
+      "id": "work-il-ricordo-degli-eterni",
+      "title": "Il ricordo degli eterni",
+      "category": "olio",
+      "technique": "Olio",
+      "details": "Olio su tavola — 100 x 100 cm",
+      "description": "Geometrie rigorose e strati sovrapposti di colore materico.",
+      "image": "Images/Il ricordo degli eterni.webp",
+      "visible": true
+    },
+    {
+      "id": "work-la-nascita-del-mito",
+      "title": "La nascita del mito",
+      "category": "grafite",
+      "technique": "Grafite",
+      "details": "Grafite su carta — 90 x 120 cm",
+      "description": "Solid workout di segni sovrapposti e texture architettoniche.",
+      "image": "Images/La nascita del mito.webp",
+      "visible": true
+    },
+    {
+      "id": "work-lo-squartamento-del-mito",
+      "title": "Lo squartamento del mito",
+      "category": "aerografo",
+      "technique": "Aerografo",
+      "details": "Aerografo su alluminio — 100 x 130 cm",
+      "description": "Sfumature impalpabili e transizioni cromatiche continue.",
+      "image": "Images/Lo squartamento del Mito.webp",
+      "visible": true
+    }
+  ],
+  "featuredWorkIds": [
+    "work-arche-2023",
+    "work-il-ricordo-degli-eterni",
+    "work-la-nascita-del-mito",
+    "work-lo-squartamento-del-mito"
+  ],
+  "aboutSections": [
+    {
+      "id": "biography",
+      "title": "Biography",
+      "html": "\n<p>Per comprendere Vucemillo è utile considerare contemporaneamente tre aspetti: la sua formazione architettonica, la sua ricerca pittorica e la sua riflessione sul rapporto tra esperienza individuale e realtà collettiva.</p>\n<h3>Le origini e la formazione artistica</h3>\n<p>Il percorso di Enrico Vucemillo ha radici familiari nell'ambiente della scultura. La sua formazione artistica comincia nell'atelier di scultura della famiglia, un contesto nel quale entra in contatto fin da giovane con la materia, le tecniche manuali e la costruzione dell'opera.</p>\n<p>Questa esperienza iniziale spiega una caratteristica che rimane presente anche nella produzione più recente: la pittura non è considerata esclusivamente come applicazione del colore su una superficie, ma come costruzione fisica e visiva.</p>\n<p>Nella sua biografia personale racconta anche il rapporto con il nonno Lodovico, al quale era legato attraverso le prime esperienze con l'argilla e la lavorazione della materia.</p>\n<p>La sua sensibilità artistica si sviluppa inoltre attraverso lo studio degli autori classici, la frequentazione dei musei e l'interesse per le sperimentazioni artistiche che hanno caratterizzato gli anni Settanta in Italia. Tra gli artisti che hanno costituito riferimenti importanti nel suo percorso figurano:</p>\n<ul>\n<li>Luciano Fabro</li>\n<li>Jannis Kounellis</li>\n<li>Mario Merz</li>\n<li>Giulio Paolini</li>\n<li>Michelangelo Pistoletto</li>\n</ul>\n<p>Questi riferimenti sono significativi perché appartengono a una generazione che ha messo in discussione i confini tradizionali della pittura e della scultura, introducendo nuovi materiali, nuove forme espressive e nuovi rapporti tra arte e realtà.</p>\n<p>Vucemillo sceglie successivamente di laurearsi in Architettura, una decisione che amplia la sua preparazione e introduce nella sua sensibilità artistica una componente progettuale. L'architettura gli offre strumenti per comprendere:</p>\n<ul>\n<li>la struttura dello spazio;</li>\n<li>il rapporto tra forma e funzione;</li>\n<li>l'equilibrio delle proporzioni;</li>\n<li>la composizione delle superfici;</li>\n<li>il rapporto tra materiali differenti;</li>\n<li>la relazione tra progetto e risultato finale.</li>\n</ul>\n<p>Questa formazione è una delle chiavi di lettura della sua pittura: anche quando l'immagine appare libera, astratta e apparentemente spontanea, la composizione conserva una dimensione strutturale.</p>\n<h3>L'esperienza professionale tra Germania e Italia</h3>\n<p>Dopo la laurea, Vucemillo intraprende un percorso professionale in Germania. La sua attività si sviluppa anche a Monaco di Baviera, dove collabora con professionisti dell'architettura e del design, tra cui R. Segers e l'atelier di Herbert Schultes, un ambiente progettuale nel quale il rapporto tra estetica, funzionalità, ricerca e innovazione ha un ruolo centrale. Il confronto con differenti metodologie progettuali contribuisce ad arricchire il suo approccio al lavoro creativo.</p>\n<p>Successivamente, in Italia, collabora ad attività didattiche e corsi di disegno presso l'Università IUAV di Venezia, anche nell'ambito delle esperienze professionali con l'architetto Paolo Piva.</p>\n<p>La sua attività non si limita quindi alla pittura intesa in senso stretto: comprende anche il disegno, la progettazione, la ricerca formale e la sperimentazione. Vi è una continuità tra queste esperienze: l'architettura non rappresenta una parentesi separata dalla pittura, ma una componente che contribuisce a definire il suo linguaggio artistico. La capacità di progettare e organizzare una struttura visiva si ritrova nella disposizione degli elementi pittorici, nella costruzione delle superfici e nel rapporto tra pieni e vuoti.</p>\n"
+    },
+    {
+      "id": "philosophy",
+      "title": "Philosophy",
+      "html": "\n<blockquote>La precisione è una forma di bellezza.</blockquote>\n<p>Enrico Vucemillo è un artista visivo la cui ricerca si colloca all'intersezione tra rigore geometrico, filosofia ontologica ed essenzialismo formale.</p>\n<p>Attraverso l'uso sapiente della grafite, dell'olio e di tecniche miste su diversi supporti, Vucemillo costruisce spazi di meditazione visiva dove ogni proporzione risponde a una precisa necessità strutturale ed estetica.</p>\n<h3>La filosofia alla base della sua pittura</h3>\n<p>Uno degli aspetti più caratteristici della produzione di Vucemillo è la presenza di una riflessione filosofica che accompagna la ricerca visiva. Non si tratta semplicemente di inserire titoli filosofici nelle opere: il rapporto con il pensiero riguarda soprattutto il modo in cui l'artista interpreta l'esperienza, la memoria e la trasformazione delle immagini.</p>\n<p>Una figura importante per comprendere questo aspetto è il filosofo italiano <strong>Emanuele Severino</strong>, che ha sviluppato una riflessione radicale sul rapporto tra essere e nulla, contestando l'idea tradizionale secondo cui le cose nascono dal nulla e ritornano nel nulla. Nel suo pensiero il divenire assume un significato filosofico molto particolare: ciò che appare e scompare nella nostra esperienza non può essere interpretato semplicemente come un passaggio dall'essere al non essere.</p>\n<p>È una riflessione complessa, ma permette di individuare alcuni temi che si ritrovano nei titoli e nelle intenzioni di ricerca di Vucemillo:</p>\n<ul>\n<li>il rapporto tra ciò che vediamo e ciò che ricordiamo;</li>\n<li>la permanenza delle esperienze nella coscienza;</li>\n<li>la trasformazione delle immagini nel tempo;</li>\n<li>il rapporto tra realtà e rappresentazione;</li>\n<li>la differenza tra percezione immediata e memoria;</li>\n<li>il significato simbolico delle immagini.</li>\n</ul>\n<p>La pittura diventa così uno strumento per interrogare la realtà, anziché limitarsi a descriverla. L'immagine non è più soltanto qualcosa che si guarda: è qualcosa che porta con sé una storia, una percezione, una trasformazione e una stratificazione di significati. Questa dimensione rende particolarmente significative le opere che richiamano esplicitamente Severino.</p>\n<p>La sua pittura non cerca necessariamente di riprodurre il mondo visibile, ma di interpretare il modo in cui il mondo viene percepito, ricordato e trasformato dalla coscienza. Non è sufficiente osservare le sue opere dal punto di vista cromatico o estetico: occorre considerare anche il processo che le ha generate e i significati che possono contenere.</p>\n"
+    },
+    {
+      "id": "method",
+      "title": "Method",
+      "html": "\n<h3>La decostruzione dell'immagine: il cuore della ricerca</h3>\n<p>Il procedimento creativo di Vucemillo può essere descritto attraverso un concetto fondamentale: la <strong>decostruzione dell'immagine</strong>. Il punto di partenza è spesso un'esperienza personale, un ricordo o una sensazione che genera una prima rappresentazione mentale. Questa immagine viene inizialmente elaborata attraverso il disegno, anche con l'utilizzo del carboncino, e successivamente sottoposta a un processo di trasformazione. L'artista interviene sulla prima rappresentazione attraverso:</p>\n<ul>\n<li>scomposizione delle forme;</li>\n<li>sovrapposizione di elementi;</li>\n<li>frammentazione delle immagini;</li>\n<li>alterazione dei rapporti cromatici;</li>\n<li>stratificazione dei materiali;</li>\n<li>inserimento di segni e tracce;</li>\n<li>modificazione della struttura originaria.</li>\n</ul>\n<p>Il risultato non è una semplice astrazione geometrica e nemmeno una rappresentazione figurativa tradizionale. È piuttosto una composizione nella quale possono convivere elementi riconoscibili e forme che sembrano appartenere a una dimensione completamente differente. La ricerca si concentra sulla trasformazione dell'esperienza visiva.</p>\n<p>Un ricordo, ad esempio, non viene conservato nella memoria come una fotografia perfettamente immutabile: con il tempo perde alcuni dettagli, ne acquisisce altri, si sovrappone a esperienze successive e cambia significato. La pittura può diventare la rappresentazione di questo processo. In questo senso le opere di Vucemillo possono essere interpretate come <strong>mappe della memoria</strong>: superfici sulle quali convivono differenti momenti temporali.</p>\n<p>La frammentazione non rappresenta necessariamente una perdita di equilibrio. Può essere, al contrario, il tentativo di raggiungere una nuova armonia attraverso elementi apparentemente dissonanti. Questa interpretazione è coerente con il testo critico dedicato alla mostra SIMUL presso la Galleria Spazio 6 di Verona.</p>\n"
+    },
+    {
+      "id": "technique",
+      "title": "Technique",
+      "html": "\n<h3>Il linguaggio pittorico: colori, materia e tecnica</h3>\n<p>Dal punto di vista tecnico, Vucemillo utilizza un linguaggio articolato, nel quale materiali tradizionali e sperimentazioni contemporanee convivono. Tra le tecniche e i materiali documentati nella sua produzione troviamo:</p>\n"
+    },
+    {
+      "id": "works",
+      "title": "Works",
+      "html": "\n<h3>Le opere più significative e il loro significato</h3>\n<p>Il catalogo del CAM, Catalogo Arte Moderna, documenta alcune opere del ciclo dedicato a Emanuele Severino che permettono di ricostruire con maggiore precisione la direzione della sua ricerca.</p>\n"
+    },
+    {
+      "id": "simul",
+      "title": "SIMUL",
+      "html": "\n<h3>Il progetto SIMUL e la Galleria Spazio 6 di Verona</h3>\n<p>Uno dei momenti importanti della sua attività espositiva è il progetto <strong>SIMUL</strong>, presentato nel marzo 2023 presso la Galleria Spazio 6 di Verona e accompagnato da un testo critico del professor Gianluigi Guarneri.</p>\n<p>Il titolo ha un significato particolare: richiama l'idea di arrivare insieme, di condividere una condizione e di ricercare una connessione. Nel testo critico viene evidenziata una caratteristica fondamentale della pittura di Vucemillo: la capacità di costruire un'immagine attraverso frammenti, dissonanze, stratificazioni tonali e richiami alla memoria. La sua ricerca viene collocata tra un astrattismo colto e una dimensione figurativa trasfigurata.</p>\n<p>Un concetto centrale è quello della <strong>simultaneità</strong>. L'opera non rappresenta necessariamente un singolo istante, ma può contenere diverse temporalità, percezioni e suggestioni: la superficie pittorica diventa uno spazio nel quale differenti esperienze possono convivere.</p>\n<p>SIMUL può essere interpretato anche in un'altra direzione: l'opera non è un oggetto che esiste soltanto attraverso l'intenzione dell'artista, ma diventa completa attraverso l'incontro con lo spettatore. Chi osserva è invitato a ricostruire i frammenti e a trovare una propria relazione con le immagini.</p>\n<p>La Galleria Spazio 6, situata a Verona, è uno spazio espositivo che si occupa di pittura, scultura e fotografia, con una programmazione dedicata ad artisti italiani e internazionali.</p>\n"
+    },
+    {
+      "id": "timeline",
+      "title": "Timeline",
+      "html": ""
+    },
+    {
+      "id": "exhibitions",
+      "title": "Exhibitions",
+      "html": "\n<p>Il percorso di Vucemillo comprende esperienze in Italia e all'estero, riportate nei profili artistici disponibili e nel profilo del Catalogo Arte Moderna.</p>\n"
+    },
+    {
+      "id": "critics",
+      "title": "Critics",
+      "html": "\n<p>Tra i nomi riportati nei riferimenti critici della sua biografia figurano Aglani, Guarneri, Reiss e Sgarbi. La presenza di un nome in un elenco di riferimenti critici non significa che ogni opera sia stata recensita o valutata direttamente da quella persona.</p>\n<p>Tra i contributi documentati, il testo di <strong>Gianluigi Guarneri</strong> per SIMUL è un riferimento concreto: la sua lettura sottolinea la capacità di Vucemillo di lavorare sulla simultaneità delle immagini, sulle stratificazioni e sulla relazione tra frammenti visivi.</p>\n<p>Contribuiscono alla sua presenza pubblica anche la partecipazione a pubblicazioni e repertori dedicati all'arte contemporanea e la presenza digitale sulla piattaforma ArtMajeur, dove il suo profilo (Vuce) presenta una selezione di opere, informazioni biografiche e riferimenti al percorso professionale, tra cui selezioni per pubblicazioni e cataloghi artistici e il collegamento con la Agora Gallery di New York.</p>\n"
+    },
+    {
+      "id": "interview",
+      "title": "Interview",
+      "html": "\n<h3>Rai Alto Adige: il significato dell'errore</h3>\n<p>Il 20 ottobre 2025 Rai Alto Adige ha dedicato a Enrico Vucemillo una puntata della trasmissione <em>Percorsi Creativi</em>, intitolata <strong>Errore</strong>. L'intervista permette di entrare nella dimensione più personale della sua ricerca.</p>\n<p>Il tema dell'errore viene affrontato sia dal punto di vista filosofico sia da quello pratico. Nella pittura tradizionale l'errore è spesso qualcosa da correggere: un'imprecisione, una deviazione dal progetto iniziale o una difficoltà tecnica. Nella ricerca artistica contemporanea, invece, può diventare una possibilità creativa.</p>\n<p>Un segno imprevisto può suggerire una nuova direzione. Una forma che non corrisponde all'intenzione iniziale può generare una composizione più interessante. Una sovrapposizione inattesa può aprire possibilità espressive che non erano state previste.</p>\n<p>Questo concetto si collega direttamente alla decostruzione dell'immagine: se l'artista parte da una percezione interiore e la trasforma progressivamente, ogni passaggio può introdurre elementi nuovi. L'opera finale non è necessariamente la realizzazione fedele di un progetto iniziale, ma il risultato di un processo di ricerca, e l'errore diventa una componente del metodo creativo.</p>\n<p>Si mette così in discussione l'idea dell'artista come semplice esecutore di un'immagine già definita nella propria mente: l'opera diventa il risultato di un dialogo tra intenzione, materia, casualità e trasformazione.</p>\n<p>L'intervista integrale è disponibile su RaiPlay Sound.</p>\n"
+    },
+    {
+      "id": "prices",
+      "title": "Prices",
+      "html": "\n<p>Il Catalogo Arte Moderna riporta alcune indicazioni di prezzo per le opere di Vucemillo.</p>\n"
+    },
+    {
+      "id": "press",
+      "title": "Press",
+      "html": "\n<p>Fonti e approfondimenti per conoscere direttamente la figura e le opere di Enrico Vucemillo.</p>\n"
+    }
+  ]
+}

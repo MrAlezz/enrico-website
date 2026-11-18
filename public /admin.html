@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — #ENRICO.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div id="loginScreen" class="login-screen">
+  <form id="loginForm" class="login-card"><div class="eyebrow">CONTENT MANAGEMENT SYSTEM</div><div class="brand">#ENRICO<span>.</span></div><p>Collega la dashboard al repository GitHub del sito. Il token resta solo nella sessione del browser.</p>
+    <label>Account GitHub<input id="ghOwner" required autocomplete="username" placeholder="es. alex"></label>
+    <label>Nome repository<input id="ghRepo" required placeholder="es. enrico-website"></label>
+    <label>Branch<input id="ghBranch" required value="main"></label>
+    <label>GitHub fine-grained token<input id="ghToken" type="password" required autocomplete="off" placeholder="github_pat_..."></label>
+    <button class="primary" type="submit">Collega repository <span>↗</span></button><div id="loginError" class="error"></div>
+    <div class="field-note" style="margin-top:16px">Serve un token con accesso al solo repository del sito e permesso <b>Contents: Read and write</b>. Non inserirlo in siti o pagine non fidate.</div>
+  </form>
+</div>
+<div id="app" class="app hidden">
+  <aside class="sidebar"><div class="brand small">#ENRICO<span>.</span></div><div class="side-label">WORKSPACE</div>
+    <button class="nav active" data-page="overview"><i>◫</i> Panoramica</button>
+    <button class="nav" data-page="works"><i>▧</i> Artworks <b id="worksCount">0</b></button>
+    <button class="nav" data-page="home"><i>⌂</i> Home</button>
+    <button class="nav" data-page="about"><i>◎</i> About</button>
+    <button class="nav" data-page="settings"><i>⚙</i> Impostazioni</button>
+    <div class="side-bottom"><a href="/" target="_blank">↗ Apri il sito</a><button id="logoutBtn">Esci dall'account</button><span>CMS VERSION 0.1.0</span></div>
+  </aside>
+  <main class="main"><header class="topbar"><div><span class="crumb">#ENRICO. /</span> <strong id="pageName">Panoramica</strong></div><div class="top-actions"><span class="saved" id="saveStatus">● Tutto salvato</span><button class="primary publish" id="saveBtn">Pubblica modifiche <span>↗</span></button></div></header>
+    <section id="page-overview" class="page"><div class="page-heading"><div><div class="eyebrow">CONTROL CENTER</div><h1>Dashboard</h1><p>Gestisci i contenuti del sito da un unico posto.</p></div><span class="live-pill">● GITHUB / ONLINE</span></div>
+      <div class="stats"><article><span>OPERE IN ARCHIVIO</span><strong id="statWorks">0</strong><small>Elementi nella collezione</small></article><article><span>SEZIONI ABOUT</span><strong id="statSections">0</strong><small>Contenuti modificabili</small></article><article><span>STATO CONTENUTI</span><strong class="ok">ATTIVO</strong><small>Salvataggio locale</small></article></div>
+      <div class="panel"><div class="panel-head"><div><div class="eyebrow">QUICK ACCESS</div><h2>Modifiche rapide</h2></div></div><div class="quick-grid"><button data-goto="works"><span>▧</span><b>Gestisci artworks</b><small>Aggiungi, modifica o nascondi opere</small></button><button data-goto="home"><span>⌂</span><b>Modifica Home</b><small>Titolo, sottotitolo e contatti</small></button><button data-goto="about"><span>◎</span><b>Modifica About</b><small>Biografia e sezioni editoriali</small></button></div></div>
+      <div class="notice"><b>Nota tecnica</b><p>La dashboard aggiorna i file direttamente nel repository GitHub. Se il repository è collegato a Cloudflare Pages, ogni pubblicazione avvia automaticamente un nuovo deploy del sito.</p></div>
+    </section>
+    <section id="page-works" class="page hidden"><div class="page-heading"><div><div class="eyebrow">COLLECTION MANAGEMENT</div><h1>Artworks</h1><p>La collezione completa e le opere in evidenza nella Home.</p></div><button class="primary" id="newWorkBtn">＋ Nuova opera</button></div><div class="works-layout"><div class="panel works-list-panel"><div class="list-toolbar"><input id="workSearch" placeholder="Cerca un'opera..."><span id="workListCount"></span></div><div id="worksList" class="works-list"></div></div><div class="panel editor" id="workEditor"><div class="empty-editor"><span>▧</span><h3>Seleziona un'opera</h3><p>Scegli un elemento dalla lista oppure creane uno nuovo.</p></div></div></div></section>
+    <section id="page-home" class="page hidden"><div class="page-heading"><div><div class="eyebrow">PAGE CONTENT</div><h1>Home</h1><p>Modifica i contenuti principali della pagina iniziale.</p></div></div><div class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">HERO SECTION</div><h2>Introduzione</h2></div></div><label>Titolo principale<input id="homeTitle"></label><label>Sottotitolo<input id="homeSubtitle"></label><div class="field-note">L'aspetto, le animazioni e la struttura della Home restano invariati.</div></div><div class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">CONTACT</div><h2>Contatti</h2></div></div><label>Email pubblica<input id="contactEmail" type="email"></label></div></section>
+    <section id="page-about" class="page hidden"><div class="page-heading"><div><div class="eyebrow">PAGE CONTENT</div><h1>About</h1><p>Gestisci il profilo dell'artista e i contenuti editoriali.</p></div></div><div class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">ARTIST PROFILE</div><h2>Profilo</h2></div></div><label>Nome visualizzato<input id="aboutName"></label><label>Biografia<textarea id="aboutBio" rows="8" placeholder="Un paragrafo per riga"></textarea></label><div class="field-note">Inserisci un paragrafo per riga vuota.</div></div><div class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">EDITORIAL SECTIONS</div><h2>Sezioni About</h2></div></div><div id="aboutSections" class="sections-editor"></div></div></section>
+    <section id="page-settings" class="page hidden"><div class="page-heading"><div><div class="eyebrow">SYSTEM</div><h1>Impostazioni</h1><p>Informazioni sul progetto e sul funzionamento del CMS.</p></div></div><div class="panel form-panel"><div class="eyebrow">GITHUB CONNECTION</div><h2>Connessione repository</h2><p class="muted">La dashboard lavora dal browser e salva i contenuti nel repository GitHub collegato.</p><div class="setting-row"><span>Editor</span><b>Browser</b></div><div class="setting-row"><span>Contenuti</span><b>public/data/content.json</b></div><div class="setting-row"><span>Immagini</span><b>public/uploads/</b></div><div class="setting-row"><span>Deploy</span><b>Automatico via Cloudflare Pages</b></div></div><div class="notice"><b>Nota sicurezza</b><p>Usa un fine-grained token limitato a questo repository, con solo Contents Read and write. Il token viene conservato in sessionStorage e cancellato quando esci o chiudi la scheda.</p></div></section>
+  </main>
+</div>
+<div id="toast" class="toast"></div><script src="admin.js"></script>
+</body></html>
