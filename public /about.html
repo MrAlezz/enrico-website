@@ -177,17 +177,27 @@
     }
     .sidebar.active { transform: translateX(0); }
 
-    .sidebar-admin-link {
-      margin-top: auto;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border-color);
-      color: var(--text-dim) !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .admin-floating-link {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      z-index: 1700;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--text-muted);
+      background: var(--bg-panel);
+      border: 1px solid var(--border-light);
+      border-radius: 50%;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
     }
-    .sidebar-admin-link:hover { color: var(--accent-crema) !important; }
-    .sidebar-admin-link svg { width: 22px; height: 22px; stroke-width: 1.7; }
+    .admin-floating-link:hover {
+      color: var(--accent-crema) !important;
+      border-color: var(--accent-crema);
+      transform: translateY(-2px);
+    }
+    .admin-floating-link svg { width: 22px; height: 22px; stroke-width: 1.7; }
 
     .sidebar-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -580,13 +590,13 @@
         <li><a href="index.html#contatti">Contact &amp; Info</a></li>
       </ul>
     </div>
-    <a class="sidebar-admin-link" href="/admin" aria-label="Area admin" title="Admin">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
-        <path d="m9 12 2 2 4-4"/>
-      </svg>
-    </a>
   </aside>
+  <a class="admin-floating-link" href="/admin" aria-label="Area admin" title="Admin">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </svg>
+  </a>
 
   <!-- HEADER -->
   <header class="site-header">
