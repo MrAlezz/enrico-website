@@ -1,42 +1,1271 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard — #ENRICO.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="admin.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CMS Dashboard — #ENRICO.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS (STILE #ENRICO.)
+       ========================================================================== */
+    :root {
+      --bg-main: #121212;
+      --bg-panel: #181818;
+      --bg-subtle: #222222;
+      --bg-input: #141414;
+
+      --text-main: #f5f4f0;
+      --text-muted: #ababab;
+      --text-dim: #7a7975;
+
+      --accent-crema: #e8e4d9;
+      --accent-danger: #e05252;
+      --accent-success: #52b788;
+      --border-color: #2a2a2a;
+      --border-light: #3d3d3d;
+
+      --font-display: 'Big Shoulders Display', Impact, sans-serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ==========================================================================
+       SIDEBAR NAVIGATION
+       ========================================================================== */
+    .dash-sidebar {
+      width: 280px;
+      background-color: var(--bg-panel);
+      border-right: 1px solid var(--border-color);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    body.admin-locked .dash-sidebar,
+    body.admin-locked .dash-main {
+      display: none;
+    }
+
+    .admin-login {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background:
+        radial-gradient(circle at top, rgba(232, 228, 217, 0.06), transparent 32rem),
+        var(--bg-main);
+    }
+    .admin-login.hidden { display: none; }
+
+    .admin-login-box {
+      width: min(420px, 100%);
+      padding: 2.5rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+    }
+    .admin-login-box h1 {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      line-height: 1;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .admin-login-box p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .admin-login-box form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .admin-login-box input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.9rem 1rem;
+      border-radius: 3px;
+    }
+    .admin-login-error {
+      min-height: 1.4em;
+      color: var(--accent-danger);
+      font-size: 0.85rem;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--accent-crema);
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      display: block;
+    }
+
+    .dash-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .dash-nav button {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dash-nav button:hover {
+      background-color: var(--bg-subtle);
+      color: var(--text-main);
+    }
+
+    .dash-nav button.active {
+      background-color: rgba(232, 228, 217, 0.08);
+      border-color: var(--border-light);
+      color: var(--accent-crema);
+    }
+
+    .badge {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      background: var(--bg-subtle);
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      color: var(--accent-crema);
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .back-link {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      transition: var(--transition);
+    }
+    .back-link:hover { color: var(--accent-crema); }
+
+    /* ==========================================================================
+       MAIN CONTENT AREA
+       ========================================================================== */
+    .dash-main {
+      margin-left: 280px;
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1400px;
+    }
+
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .dash-header h1 {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .dash-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 0.4rem;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      font-weight: 600;
+    }
+
+    .btn--solid {
+      background-color: var(--accent-crema);
+      color: var(--bg-main);
+      border-color: var(--accent-crema);
+    }
+    .btn--solid:hover {
+      background-color: transparent;
+      color: var(--accent-crema);
+    }
+
+    .btn--ghost {
+      background-color: var(--bg-subtle);
+      color: var(--text-main);
+      border-color: var(--border-light);
+    }
+    .btn--ghost:hover {
+      border-color: var(--accent-crema);
+      color: var(--accent-crema);
+    }
+
+    .btn--danger {
+      background-color: rgba(224, 82, 82, 0.1);
+      color: var(--accent-danger);
+      border-color: rgba(224, 82, 82, 0.3);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.95rem;
+    }
+    .btn--danger:hover {
+      background-color: var(--accent-danger);
+      color: #fff;
+    }
+
+    .btn--small {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.95rem;
+    }
+
+    /* TABS / VIEWS */
+    .tab-view { display: none; }
+    .tab-view.active { display: block; animation: fadeIn 0.3s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       FORMS & INPUTS
+       ========================================================================== */
+    .panel-box {
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .panel-box h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      color: var(--accent-crema);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select,
+    textarea {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.8rem 1rem;
+      border-radius: 3px;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent-crema);
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+    }
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-crema);
+      cursor: pointer;
+    }
+    .checkbox-row span {
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       ARTWORKS TABLE / LIST
+       ========================================================================== */
+    .artworks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .artwork-row {
+      display: grid;
+      grid-template-columns: 80px 1.5fr 1fr 140px auto;
+      align-items: center;
+      gap: 1.5rem;
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      padding: 1rem 1.5rem;
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .artwork-row:hover {
+      border-color: var(--border-light);
+    }
+
+    .art-thumb {
+      width: 80px;
+      height: 60px;
+      background-color: #0e0e0e;
+      border: 1px solid var(--border-color);
+      object-fit: contain;
+      border-radius: 2px;
+      padding: 4px;
+    }
+
+    .art-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .art-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .art-cat {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-crema);
+      background: var(--bg-subtle);
+      padding: 0.3rem 0.8rem;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    .featured-tag {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+      border: 1px solid var(--accent-crema);
+      color: var(--accent-crema);
+      text-align: center;
+    }
+    .featured-tag.off {
+      border-color: var(--border-color);
+      color: var(--text-dim);
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* ==========================================================================
+       EXPORT CODE / INSTRUCTIONS
+       ========================================================================== */
+    .code-output {
+      width: 100%;
+      height: 260px;
+      background-color: #0b0b0b;
+      border: 1px solid var(--border-light);
+      color: #a3be8c;
+      font-family: monospace;
+      font-size: 0.85rem;
+      padding: 1rem;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    .info-banner {
+      background-color: rgba(232, 228, 217, 0.06);
+      border-left: 3px solid var(--accent-crema);
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+    .info-banner strong { color: var(--text-main); }
+
+    /* STATUS INDICATOR */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--bg-subtle);
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 1rem;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-success);
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--accent-crema);
+      color: var(--bg-main);
+      padding: 1rem 1.6rem;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateY(120px);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 3000;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      z-index: 2000;
+    }
+    .modal-backdrop.active { display: flex; }
+    .modal-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      width: 100%;
+      max-width: 700px;
+      padding: 2.5rem;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    @media (max-width: 960px) {
+      body { flex-direction: column; }
+      .dash-sidebar {
+        position: static;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .dash-main { margin-left: 0; padding: 2rem 1.5rem; }
+      .artwork-row {
+        grid-template-columns: 60px 1fr;
+        gap: 1rem;
+      }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body>
-<div id="loginScreen" class="login-screen">
-  <form id="loginForm" class="login-card"><div class="eyebrow">CONTENT MANAGEMENT SYSTEM</div><div class="brand">#ENRICO<span>.</span></div><p>Collega la dashboard al repository GitHub del sito. Il token resta solo nella sessione del browser.</p>
-    <label>Account GitHub<input id="ghOwner" required autocomplete="username" placeholder="es. alex"></label>
-    <label>Nome repository<input id="ghRepo" required placeholder="es. enrico-website"></label>
-    <label>Branch<input id="ghBranch" required value="main"></label>
-    <label>GitHub fine-grained token<input id="ghToken" type="password" required autocomplete="off" placeholder="github_pat_..."></label>
-    <button class="primary" type="submit">Collega repository <span>↗</span></button><div id="loginError" class="error"></div>
-    <div class="field-note" style="margin-top:16px">Serve un token con accesso al solo repository del sito e permesso <b>Contents: Read and write</b>. Non inserirlo in siti o pagine non fidate.</div>
-  </form>
-</div>
-<div id="app" class="app hidden">
-  <aside class="sidebar"><div class="brand small">#ENRICO<span>.</span></div><div class="side-label">WORKSPACE</div>
-    <button class="nav active" data-page="overview"><i>◫</i> Panoramica</button>
-    <button class="nav" data-page="works"><i>▧</i> Artworks <b id="worksCount">0</b></button>
-    <button class="nav" data-page="home"><i>⌂</i> Home</button>
-    <button class="nav" data-page="about"><i>◎</i> About</button>
-    <button class="nav" data-page="settings"><i>⚙</i> Impostazioni</button>
-    <div class="side-bottom"><a href="/" target="_blank">↗ Apri il sito</a><button id="logoutBtn">Esci dall'account</button><span>CMS VERSION 0.1.0</span></div>
+<body class="admin-locked">
+
+  <div class="admin-login" id="adminLogin">
+    <div class="admin-login-box">
+      <h1>Area Admin</h1>
+      <p>Inserisci le credenziali per accedere al pannello.</p>
+      <form id="adminLoginForm">
+        <label for="adminUsername">Nome utente</label>
+        <input type="text" id="adminUsername" autocomplete="username" required>
+        <label for="adminPassword">Password</label>
+        <input type="password" id="adminPassword" autocomplete="current-password" required>
+        <div class="admin-login-error" id="adminLoginError" role="alert"></div>
+        <button type="submit" class="btn btn--solid">Accedi</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar">
+    <div>
+      <span class="brand">#ENRICO.</span>
+      <span class="brand-sub">Online Site Manager</span>
+
+      <div class="status-pill">
+        <span class="status-dot" id="syncDot"></span>
+        <span id="syncText">Database Connesso</span>
+      </div>
+
+      <nav class="dash-nav">
+        <button type="button" class="active" data-tab="artworks">
+          <span>Gestione Opere</span>
+          <span class="badge" id="artCountBadge">0</span>
+        </button>
+        <button type="button" data-tab="settings">
+          <span>Testi &amp; Contatti</span>
+        </button>
+        <button type="button" data-tab="publish">
+          <span>Esporta &amp; Backup</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="index.html" class="back-link">
+        &larr; Torna al Sito
+      </a>
+    </div>
   </aside>
-  <main class="main"><header class="topbar"><div><span class="crumb">#ENRICO. /</span> <strong id="pageName">Panoramica</strong></div><div class="top-actions"><span class="saved" id="saveStatus">● Tutto salvato</span><button class="primary publish" id="saveBtn">Pubblica modifiche <span>↗</span></button></div></header>
-    <section id="page-overview" class="page"><div class="page-heading"><div><div class="eyebrow">CONTROL CENTER</div><h1>Dashboard</h1><p>Gestisci i contenuti del sito da un unico posto.</p></div><span class="live-pill">● GITHUB / ONLINE</span></div>
-      <div class="stats"><article><span>OPERE IN ARCHIVIO</span><strong id="statWorks">0</strong><small>Elementi nella collezione</small></article><article><span>SEZIONI ABOUT</span><strong id="statSections">0</strong><small>Contenuti modificabili</small></article><article><span>STATO CONTENUTI</span><strong class="ok">ATTIVO</strong><small>Salvataggio locale</small></article></div>
-      <div class="panel"><div class="panel-head"><div><div class="eyebrow">QUICK ACCESS</div><h2>Modifiche rapide</h2></div></div><div class="quick-grid"><button data-goto="works"><span>▧</span><b>Gestisci artworks</b><small>Aggiungi, modifica o nascondi opere</small></button><button data-goto="home"><span>⌂</span><b>Modifica Home</b><small>Titolo, sottotitolo e contatti</small></button><button data-goto="about"><span>◎</span><b>Modifica About</b><small>Biografia e sezioni editoriali</small></button></div></div>
-      <div class="notice"><b>Nota tecnica</b><p>La dashboard aggiorna i file direttamente nel repository GitHub. Se il repository è collegato a Cloudflare Pages, ogni pubblicazione avvia automaticamente un nuovo deploy del sito.</p></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="dash-main">
+
+    <!-- TAB 1: GESTIONE OPERE -->
+    <section class="tab-view active" id="tab-artworks">
+      <div class="dash-header">
+        <div>
+          <h1>Gestione Opere</h1>
+          <p>Aggiungi, modifica o rimuovi le opere dalla collezione e scegli quali mostrare in Homepage.</p>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn btn--solid" id="openNewArtModalBtn">+ Nuova Opera</button>
+        </div>
+      </div>
+
+      <div class="artworks-list" id="artworksList">
+        <!-- Popolato dinamicamente via JS -->
+      </div>
     </section>
-    <section id="page-works" class="page hidden"><div class="page-heading"><div><div class="eyebrow">COLLECTION MANAGEMENT</div><h1>Artworks</h1><p>La collezione completa e le opere in evidenza nella Home.</p></div><button class="primary" id="newWorkBtn">＋ Nuova opera</button></div><div class="works-layout"><div class="panel works-list-panel"><div class="list-toolbar"><input id="workSearch" placeholder="Cerca un'opera..."><span id="workListCount"></span></div><div id="worksList" class="works-list"></div></div><div class="panel editor" id="workEditor"><div class="empty-editor"><span>▧</span><h3>Seleziona un'opera</h3><p>Scegli un elemento dalla lista oppure creane uno nuovo.</p></div></div></div></section>
-    <section id="page-home" class="page hidden"><div class="page-heading"><div><div class="eyebrow">PAGE CONTENT</div><h1>Home</h1><p>Modifica i contenuti principali della pagina iniziale.</p></div></div><div class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">HERO SECTION</div><h2>Introduzione</h2></div></div><label>Titolo principale<input id="homeTitle"></label><label>Sottotitolo<input id="homeSubtitle"></label><div class="field-note">L'aspetto, le animazioni e la struttura della Home restano invariati.</div></div><div class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">CONTACT</div><h2>Contatti</h2></div></div><label>Email pubblica<input id="contactEmail" type="email"></label></div></section>
-    <section id="page-about" class="page hidden"><div class="page-heading"><div><div class="eyebrow">PAGE CONTENT</div><h1>About</h1><p>Gestisci il profilo dell'artista e i contenuti editoriali.</p></div></div><div class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">ARTIST PROFILE</div><h2>Profilo</h2></div></div><label>Nome visualizzato<input id="aboutName"></label><label>Biografia<textarea id="aboutBio" rows="8" placeholder="Un paragrafo per riga"></textarea></label><div class="field-note">Inserisci un paragrafo per riga vuota.</div></div><div class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">EDITORIAL SECTIONS</div><h2>Sezioni About</h2></div></div><div id="aboutSections" class="sections-editor"></div></div></section>
-    <section id="page-settings" class="page hidden"><div class="page-heading"><div><div class="eyebrow">SYSTEM</div><h1>Impostazioni</h1><p>Informazioni sul progetto e sul funzionamento del CMS.</p></div></div><div class="panel form-panel"><div class="eyebrow">GITHUB CONNECTION</div><h2>Connessione repository</h2><p class="muted">La dashboard lavora dal browser e salva i contenuti nel repository GitHub collegato.</p><div class="setting-row"><span>Editor</span><b>Browser</b></div><div class="setting-row"><span>Contenuti</span><b>public/data/content.json</b></div><div class="setting-row"><span>Immagini</span><b>public/uploads/</b></div><div class="setting-row"><span>Deploy</span><b>Automatico via Cloudflare Pages</b></div></div><div class="notice"><b>Nota sicurezza</b><p>Usa un fine-grained token limitato a questo repository, con solo Contents Read and write. Il token viene conservato in sessionStorage e cancellato quando esci o chiudi la scheda.</p></div></section>
+
+    <!-- TAB 2: TESTI & CONTATTI -->
+    <section class="tab-view" id="tab-settings">
+      <div class="dash-header">
+        <div>
+          <h1>Testi &amp; Contatti</h1>
+          <p>Modifica il titolo, il motto principale, l'email di contatto e la biografia in About.</p>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn btn--solid" id="saveSettingsBtn">Salva Modifiche</button>
+        </div>
+      </div>
+
+      <div class="panel-box">
+        <h2>Identità &amp; Homepage</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="cfgBrand">Nome Brand / Titolo</label>
+            <input type="text" id="cfgBrand" value="#ENRICO.">
+          </div>
+          <div class="form-group">
+            <label for="cfgEyebrow">Sottotitolo Eyebrow</label>
+            <input type="text" id="cfgEyebrow" value="Art Portfolio — EGO PHISIS">
+          </div>
+          <div class="form-group full">
+            <label for="cfgMotto">Motto Principale (Hero)</label>
+            <input type="text" id="cfgMotto" value="EGO PHISIS">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-box">
+        <h2>Contatti &amp; Studio</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="cfgEmail">Email Diretta</label>
+            <input type="email" id="cfgEmail" value="info@enricovucemillo.art">
+          </div>
+          <div class="form-group">
+            <label for="cfgStudio">Info Studio</label>
+            <input type="text" id="cfgStudio" value="By appointment only">
+          </div>
+          <div class="form-group full">
+            <label for="cfgContactText">Testo Sezione Contatti</label>
+            <textarea id="cfgContactText" rows="3">For information regarding available artworks, acquisitions, collaborations, or exhibitions, send a message or use the contact details below.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-box">
+        <h2>Biografia Breve (Pagina About)</h2>
+        <div class="form-group">
+          <label for="cfgBio">Testo Introduttivo Artista</label>
+          <textarea id="cfgBio" rows="5">Enrico Vucemillo, conosciuto nel mondo artistico anche con il nome di Vuce, è un artista italiano che opera nell'ambito della pittura contemporanea, con una ricerca che si colloca tra astrazione, figurazione, sperimentazione materica e riflessione filosofica.</textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: ESPORTA & BACKUP -->
+    <section class="tab-view" id="tab-publish">
+      <div class="dash-header">
+        <div>
+          <h1>Esporta &amp; Backup</h1>
+          <p>Scarica i file HTML aggiornati o un backup JSON dei tuoi dati.</p>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn btn--ghost" id="exportJsonBtn">Scarica Backup JSON</button>
+          <button type="button" class="btn btn--solid" id="downloadIndexBtn">Scarica index.html</button>
+          <button type="button" class="btn btn--solid" id="downloadArtworksBtn">Scarica artworks.html</button>
+        </div>
+      </div>
+
+      <div class="info-banner">
+        <strong>Salvataggio in Tempo Reale:</strong> Ogni modifica effettuata sulle opere o sui testi viene sincronizzata istantaneamente sul database cloud e aggiornata subito su <em>Home</em>, <em>Artworks</em> e <em>About</em>.
+      </div>
+
+      <div class="panel-box">
+        <h2>Codice HTML Generato (Anteprima Operativa)</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+          Codice HTML delle card generato automaticamente in base alle opere salvate:
+        </p>
+        <textarea class="code-output" id="generatedHtmlPreview" readonly></textarea>
+      </div>
+    </section>
+
   </main>
-</div>
-<div id="toast" class="toast"></div><script src="admin.js"></script>
-</body></html>
+
+  <!-- MODAL: AGGIUNGI / MODIFICA OPERA -->
+  <div class="modal-backdrop" id="artworkModal">
+    <div class="modal-box">
+      <h2 id="modalTitle" style="font-family: var(--font-display); font-size: 2.2rem; text-transform: uppercase; color: var(--accent-crema); margin-bottom: 1.5rem;">Nuova Opera</h2>
+      <form id="artworkForm">
+        <input type="hidden" id="artId">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="artTitle">Titolo Opera *</label>
+            <input type="text" id="artTitle" required placeholder="Es. Arche 2023">
+          </div>
+
+          <div class="form-group">
+            <label for="artCategory">Tecnica / Categoria *</label>
+            <select id="artCategory" required>
+              <option value="olio">Olio</option>
+              <option value="grafite">Grafite</option>
+              <option value="aerografo">Aerografo</option>
+              <option value="pigmenti">Pigmenti</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label for="artSubtitle">Dimensioni &amp; Supporto *</label>
+            <input type="text" id="artSubtitle" required placeholder="Es. Olio su tela — 120 x 140 cm">
+          </div>
+
+          <div class="form-group full">
+            <label for="artImage">Percorso Immagine (cartella Images/) *</label>
+            <input type="text" id="artImage" required placeholder="Es. Images/Arche 2023.webp">
+          </div>
+
+          <div class="form-group full">
+            <label for="artDesc">Descrizione Opera *</label>
+            <textarea id="artDesc" rows="4" required placeholder="Inserisci la descrizione critica o poetica dell'opera..."></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label class="checkbox-row">
+              <input type="checkbox" id="artFeatured">
+              <span>Mostra in Homepage (Selected Works)</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+          <button type="button" class="btn btn--ghost" id="closeModalBtn">Annulla</button>
+          <button type="submit" class="btn btn--solid">Salva Opera</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const login = document.getElementById('adminLogin');
+      const loginForm = document.getElementById('adminLoginForm');
+      const loginError = document.getElementById('adminLoginError');
+      const ADMIN_USERNAME = 'admin';
+      const ADMIN_PASSWORD = 'admin';
+
+      function unlockAdmin() {
+        sessionStorage.setItem('enricoAdminAuthenticated', 'true');
+        document.body.classList.remove('admin-locked');
+        login.classList.add('hidden');
+      }
+
+      if (sessionStorage.getItem('enricoAdminAuthenticated') === 'true') {
+        unlockAdmin();
+      }
+
+      loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const username = document.getElementById('adminUsername').value.trim();
+        const password = document.getElementById('adminPassword').value;
+        if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+          loginError.textContent = '';
+          unlockAdmin();
+          loginForm.reset();
+        } else {
+          loginError.textContent = 'Nome utente o password non validi.';
+          document.getElementById('adminPassword').select();
+        }
+      });
+
+      if (document.body.classList.contains('admin-locked')) {
+        document.getElementById('adminUsername').focus();
+      }
+
+      // ========================================================================
+      // DATI INIZIALI DI DEFAULT
+      // ========================================================================
+      const DEFAULT_STATE = {
+        settings: {
+          brand: '#ENRICO.',
+          eyebrow: 'Art Portfolio — EGO PHISIS',
+          motto: 'EGO PHISIS',
+          email: 'info@enricovucemillo.art',
+          studio: 'By appointment only',
+          contactText: 'For information regarding available artworks, acquisitions, collaborations, or exhibitions, send a message or use the contact details below.',
+          bio: "Enrico Vucemillo, conosciuto nel mondo artistico anche con il nome di Vuce, è un artista italiano che opera nell'ambito della pittura contemporanea, con una ricerca che si colloca tra astrazione, figurazione, sperimentazione materica e riflessione filosofica."
+        },
+        artworks: [
+          {
+            id: '1',
+            title: 'Arche 2023',
+            category: 'olio',
+            subtitle: 'Olio su tela — 120 x 140 cm',
+            image: 'Images/Arche 2023.webp',
+            description: 'Indagine pittorica sulle origini e sulla percezione formale.',
+            featured: true
+          },
+          {
+            id: '2',
+            title: 'Il ricordo degli eterni',
+            category: 'olio',
+            subtitle: 'Olio su tavola — 100 x 100 cm',
+            image: 'Images/Il ricordo degli eterni.webp',
+            description: 'Geometrie rigorose e strati sovrapposti di colore materico.',
+            featured: true
+          },
+          {
+            id: '3',
+            title: 'La nascita del mito',
+            category: 'grafite',
+            subtitle: 'Grafite su carta — 90 x 120 cm',
+            image: 'Images/La nascita del mito.webp',
+            description: 'Solid workout di segni sovrapposti e texture architettoniche.',
+            featured: true
+          },
+          {
+            id: '4',
+            title: 'Lo squartamento del mito',
+            category: 'aerografo',
+            subtitle: 'Aerografo su alluminio — 100 x 130 cm',
+            image: 'Images/Lo squartamento del Mito.webp',
+            description: 'Sfumature impalpabili e transizioni cromatiche continue.',
+            featured: true
+          },
+          {
+            id: '5',
+            title: 'Visus',
+            category: 'olio',
+            subtitle: 'Olio su tela — 120 x 140 cm',
+            image: 'Images/test.jpg',
+            description: 'Indagine pittorica sulle profondità dello sguardo e sulla percezione formale.',
+            featured: false
+          },
+          {
+            id: '6',
+            title: 'Structure deck',
+            category: 'olio',
+            subtitle: 'Olio su tavola — 100 x 100 cm',
+            image: 'Images/test.jpg',
+            description: 'Geometrie rigorose e strati sovrapposti di colore materico.',
+            featured: false
+          },
+          {
+            id: '7',
+            title: 'Urbe',
+            category: 'grafite',
+            subtitle: 'Grafite su carta — 90 x 120 cm',
+            image: 'Images/test.jpg',
+            description: 'Solid workout di segni sovrapposti e texture architettoniche.',
+            featured: false
+          },
+          {
+            id: '8',
+            title: 'Heart Sequence',
+            category: 'aerografo',
+            subtitle: 'Aerografo su alluminio — 100 x 130 cm',
+            image: 'Images/test.jpg',
+            description: 'Sfumature impalpabili e transizioni cromatiche continue.',
+            featured: false
+          },
+          {
+            id: '9',
+            title: 'Cognito',
+            category: 'pigmenti',
+            subtitle: 'Pigmenti minerali su tavola — 100 x 140 cm',
+            image: 'Images/test.jpg',
+            description: 'Detox 5 minutes di quiete visiva e sintesi materica.',
+            featured: false
+          }
+        ]
+      };
+
+      let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      let db = null;
+      let currentUser = null;
+      let stateDocRef = null;
+
+      // ========================================================================
+      // TOAST NOTIFICHE
+      // ========================================================================
+      const toastEl = document.getElementById('toast');
+      let toastTimer;
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('show'), 3000);
+      }
+
+      // ========================================================================
+      // SINCRONIZZAZIONE IN TEMPO REALE
+      // ========================================================================
+      async function initRealtimeSync() {
+        const syncDot = document.getElementById('syncDot');
+        const syncText = document.getElementById('syncText');
+        try {
+          if (typeof __firebase_config === 'undefined') {
+            syncDot.style.backgroundColor = '#e0a952';
+            syncText.textContent = 'Modalità Locale';
+            return;
+          }
+          const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+          const firebaseConfig = JSON.parse(__firebase_config);
+          const app = initializeApp(firebaseConfig);
+          const auth = getAuth(app);
+          db = getFirestore(app);
+
+          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            const cred = await signInWithCustomToken(auth, __initial_auth_token);
+            currentUser = cred.user;
+          } else {
+            const cred = await signInAnonymously(auth);
+            currentUser = cred.user;
+          }
+
+          if (!currentUser) return;
+          stateDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_content', 'main');
+
+          onSnapshot(stateDocRef, (snapshot) => {
+            syncDot.style.backgroundColor = '#52b788';
+            syncText.textContent = 'Sincronizzato Live';
+            if (snapshot.exists()) {
+              const remoteData = snapshot.data();
+              if (remoteData.settings) state.settings = { ...state.settings, ...remoteData.settings };
+              if (Array.isArray(remoteData.artworks)) state.artworks = remoteData.artworks;
+              renderArtworks();
+              loadSettingsForm();
+              updateCodePreview();
+            } else {
+              persistState();
+            }
+          }, (error) => {
+            console.error('Errore sincronizzazione:', error);
+            syncDot.style.backgroundColor = '#e05252';
+            syncText.textContent = 'Errore Connessione';
+          });
+        } catch (err) {
+          console.error('Errore inizializzazione:', err);
+          syncDot.style.backgroundColor = '#e05252';
+          syncText.textContent = 'Offline';
+        }
+      }
+
+      async function persistState(successMessage) {
+        renderArtworks();
+        updateCodePreview();
+        if (stateDocRef && currentUser) {
+          try {
+            await setDoc(stateDocRef, {
+              settings: state.settings,
+              artworks: state.artworks,
+              updatedAt: Date.now()
+            });
+            if (successMessage) showToast(successMessage);
+          } catch (e) {
+            showToast('Errore di salvataggio online');
+          }
+        } else if (successMessage) {
+          showToast(successMessage);
+        }
+      }
+
+      // ========================================================================
+      // NAVIGAZIONE SCHEDE (TABS)
+      // ========================================================================
+      const navButtons = document.querySelectorAll('.dash-nav button');
+      const tabViews = document.querySelectorAll('.tab-view');
+
+      navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-tab');
+          navButtons.forEach(b => b.classList.toggle('active', b === btn));
+          tabViews.forEach(v => v.classList.toggle('active', v.id === `tab-${target}`));
+          if (target === 'publish') updateCodePreview();
+        });
+      });
+
+      // ========================================================================
+      // RENDER LISTA OPERE
+      // ========================================================================
+      const artworksList = document.getElementById('artworksList');
+      const artCountBadge = document.getElementById('artCountBadge');
+
+      const CAT_LABELS = {
+        olio: 'Olio',
+        grafite: 'Grafite',
+        aerografo: 'Aerografo',
+        pigmenti: 'Pigmenti'
+      };
+
+      function renderArtworks() {
+        artCountBadge.textContent = state.artworks.length;
+        artworksList.innerHTML = '';
+
+        state.artworks.forEach(art => {
+          const row = document.createElement('div');
+          row.className = 'artwork-row';
+          row.innerHTML = `
+            <img class="art-thumb" src="${art.image}" alt="${art.title}" onerror="this.src='https://placehold.co/80x60/181818/e8e4d9?text=IMG'">
+            <div>
+              <div class="art-title">${art.title}</div>
+              <div class="art-sub">${art.subtitle}</div>
+            </div>
+            <div><span class="art-cat">${CAT_LABELS[art.category] || art.category}</span></div>
+            <div>
+              <span class="featured-tag ${art.featured ? '' : 'off'}">
+                ${art.featured ? '★ In Homepage' : 'Solo Collezione'}
+              </span>
+            </div>
+            <div class="row-actions">
+              <button type="button" class="btn btn--ghost btn--small edit-btn" data-id="${art.id}">Modifica</button>
+              <button type="button" class="btn btn--danger delete-btn" data-id="${art.id}">Elimina</button>
+            </div>
+          `;
+          artworksList.appendChild(row);
+        });
+
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+          btn.addEventListener('click', () => openModal(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+          btn.addEventListener('click', () => deleteArtwork(btn.getAttribute('data-id')));
+        });
+      }
+
+      // ========================================================================
+      // MODALE AGGIUNGI / MODIFICA OPERA
+      // ========================================================================
+      const modal = document.getElementById('artworkModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const artworkForm = document.getElementById('artworkForm');
+
+      function openModal(id = null) {
+        if (id) {
+          const art = state.artworks.find(a => a.id === id);
+          if (!art) return;
+          modalTitle.textContent = 'Modifica Opera';
+          document.getElementById('artId').value = art.id;
+          document.getElementById('artTitle').value = art.title;
+          document.getElementById('artCategory').value = art.category;
+          document.getElementById('artSubtitle').value = art.subtitle;
+          document.getElementById('artImage').value = art.image;
+          document.getElementById('artDesc').value = art.description;
+          document.getElementById('artFeatured').checked = art.featured;
+        } else {
+          modalTitle.textContent = 'Nuova Opera';
+          artworkForm.reset();
+          document.getElementById('artId').value = '';
+          document.getElementById('artFeatured').checked = false;
+        }
+        modal.classList.add('active');
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+      }
+
+      document.getElementById('openNewArtModalBtn').addEventListener('click', () => openModal());
+      document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+      modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+      artworkForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        const id = document.getElementById('artId').value;
+        const payload = {
+          id: id || String(Date.now()),
+          title: document.getElementById('artTitle').value.trim(),
+          category: document.getElementById('artCategory').value,
+          subtitle: document.getElementById('artSubtitle').value.trim(),
+          image: document.getElementById('artImage').value.trim(),
+          description: document.getElementById('artDesc').value.trim(),
+          featured: document.getElementById('artFeatured').checked
+        };
+
+        if (id) {
+          const idx = state.artworks.findIndex(a => a.id === id);
+          if (idx !== -1) state.artworks[idx] = payload;
+          closeModal();
+          await persistState('Opera aggiornata in tempo reale!');
+        } else {
+          state.artworks.unshift(payload);
+          closeModal();
+          await persistState('Nuova opera pubblicata in tempo reale!');
+        }
+      });
+
+      async function deleteArtwork(id) {
+        state.artworks = state.artworks.filter(a => a.id !== id);
+        await persistState('Opera rimossa in tempo reale');
+      }
+
+      // ========================================================================
+      // IMPOSTAZIONI TESTI & CONTATTI
+      // ========================================================================
+      function loadSettingsForm() {
+        document.getElementById('cfgBrand').value = state.settings.brand;
+        document.getElementById('cfgEyebrow').value = state.settings.eyebrow;
+        document.getElementById('cfgMotto').value = state.settings.motto;
+        document.getElementById('cfgEmail').value = state.settings.email;
+        document.getElementById('cfgStudio').value = state.settings.studio;
+        document.getElementById('cfgContactText').value = state.settings.contactText;
+        document.getElementById('cfgBio').value = state.settings.bio;
+      }
+
+      document.getElementById('saveSettingsBtn').addEventListener('click', async () => {
+        state.settings.brand = document.getElementById('cfgBrand').value.trim();
+        state.settings.eyebrow = document.getElementById('cfgEyebrow').value.trim();
+        state.settings.motto = document.getElementById('cfgMotto').value.trim();
+        state.settings.email = document.getElementById('cfgEmail').value.trim();
+        state.settings.studio = document.getElementById('cfgStudio').value.trim();
+        state.settings.contactText = document.getElementById('cfgContactText').value.trim();
+        state.settings.bio = document.getElementById('cfgBio').value.trim();
+        await persistState('Testi aggiornati in tempo reale su tutto il sito!');
+      });
+
+      // ========================================================================
+      // GENERATORE CODICE HTML & DOWNLOAD BACKUP
+      // ========================================================================
+      function buildCardHTML(art, linkPrefix = '') {
+        const slug = art.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        const label = CAT_LABELS[art.category] || art.category;
+        return `        <article class="work-card" id="work-${slug}" data-category="${art.category}">
+          <div class="work-image-wrapper">
+            <img class="work-image" src="${art.image}" alt="${art.title}" loading="lazy">
+            <div class="work-fallback"><span>${art.title}</span></div>
+          </div>
+          <div class="work-info">
+            <p class="panel__eyebrow">${label}</p>
+            <h3 class="panel__title">${art.title}</h3>
+            <p class="panel__sub" lang="it">${art.subtitle}</p>
+            <p class="work-desc" lang="it">${art.description}</p>
+            <div>
+              <a class="btn btn--ghost" href="${linkPrefix}#contatti">Inquire</a>
+            </div>
+          </div>
+        </article>`;
+      }
+
+      function updateCodePreview() {
+        const cardsHtml = state.artworks.map(a => buildCardHTML(a, 'index.html')).join('\n\n');
+        document.getElementById('generatedHtmlPreview').value = cardsHtml;
+      }
+
+      function downloadFile(filename, content, type = 'text/html') {
+        const blob = new Blob([content], { type });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      document.getElementById('exportJsonBtn').addEventListener('click', () => {
+        downloadFile('enrico-site-backup.json', JSON.stringify(state, null, 2), 'application/json');
+        showToast('Backup JSON scaricato!');
+      });
+
+      document.getElementById('downloadIndexBtn').addEventListener('click', async () => {
+        try {
+          const res = await fetch('index.html');
+          if (!res.ok) throw new Error();
+          let html = await res.text();
+
+          const featured = state.artworks.filter(a => a.featured);
+          const featuredHtml = (featured.length ? featured : state.artworks.slice(0, 4))
+            .map(a => buildCardHTML(a, '')).join('\n\n');
+
+          html = html.replace(
+            /(<div class="track" id="track">)([\s\S]*?)(<\/div>\s*<div class="no-results" id="noResults">)/,
+            `$1\n${featuredHtml}\n      $3`
+          );
+          html = html.replace(/(<h1 class="panel__title--xl">)([\s\S]*?)(<\/h1>)/, `$1${state.settings.brand}$3`);
+          html = html.replace(/(<p class="panel__sub--serif"[^>]*>)([\s\S]*?)(<\/p>)/, `$1${state.settings.motto}$3`);
+          html = html.replace(/(<span id="emailText">)([\s\S]*?)(<\/span>)/, `$1${state.settings.email}$3`);
+
+          downloadFile('index.html', html);
+          showToast('index.html generato e scaricato!');
+        } catch (e) {
+          showToast('Apri da server locale per esportare index.html');
+        }
+      });
+
+      document.getElementById('downloadArtworksBtn').addEventListener('click', async () => {
+        try {
+          const res = await fetch('artworks.html');
+          if (!res.ok) throw new Error();
+          let html = await res.text();
+
+          const allCardsHtml = state.artworks.map(a => buildCardHTML(a, 'index.html')).join('\n\n');
+          html = html.replace(
+            /(<div class="track grid-view" id="track">)([\s\S]*?)(<\/div>\s*<div class="no-results" id="noResults">)/,
+            `$1\n${allCardsHtml}\n      $3`
+          );
+
+          downloadFile('artworks.html', html);
+          showToast('artworks.html generato e scaricato!');
+        } catch (e) {
+          showToast('Apri da server locale per esportare artworks.html');
+        }
+      });
+
+      // Avvio interfaccia e sincronizzazione
+      renderArtworks();
+      loadSettingsForm();
+      await initRealtimeSync();
+    });
+  </script>
+</body>
+</html>

@@ -204,6 +204,21 @@ button:hover .icon-inline {
   transform: translateX(0);
 }
 
+.sidebar-admin-link {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-dim) !important;
+  font-family: var(--font-display);
+  font-size: 1rem !important;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar-admin-link:hover { color: var(--accent-crema) !important; }
+
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -917,6 +932,7 @@ button:hover .icon-inline {
       <li><a href="#" class="sidebar-filter" data-filter="pigmenti">Pigmenti <span class="sidebar-count">02</span></a></li>
     </ul>
   </div>
+  <a class="sidebar-admin-link" href="admin.html">Admin <span aria-hidden="true">↗</span></a>
 </aside>
 
 <div class="lightbox-modal" id="lightboxModal">
