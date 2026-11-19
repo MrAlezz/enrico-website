@@ -605,7 +605,7 @@
 
       <div class="status-pill">
         <span class="status-dot" id="syncDot"></span>
-        <span id="syncText">Database Connesso</span>
+        <span id="syncText">Caricamento contenuti...</span>
       </div>
 
       <nav class="dash-nav">
@@ -721,7 +721,27 @@
       </div>
 
       <div class="info-banner">
-        <strong>Salvataggio in Tempo Reale:</strong> Ogni modifica effettuata sulle opere o sui testi viene sincronizzata istantaneamente sul database cloud e aggiornata subito su <em>Home</em>, <em>Artworks</em> e <em>About</em>.
+        <strong>Pubblicazione sul sito:</strong> collega GitHub una volta per sessione. Ogni salvataggio aggiorna i contenuti del sito e avvia il deploy.
+      </div>
+
+      <div class="panel-box">
+        <h2>Collega GitHub per pubblicare</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+          Inserisci un token GitHub con permesso <strong>Contents: Read and write</strong> su questo repository. Il token resta solo in questa sessione del browser.
+        </p>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="githubToken">Token GitHub</label>
+            <input type="password" id="githubToken" autocomplete="off" placeholder="github_pat_...">
+          </div>
+          <div class="form-group full">
+            <button type="button" class="btn btn--solid" id="connectGithubBtn">Verifica e collega GitHub</button>
+            <p id="githubTokenStatus" role="status" style="color: var(--text-muted); font-size: 0.85rem;"></p>
+          </div>
+          <div class="form-group full">
+            <button type="button" class="btn btn--solid" id="publishPendingBtn">Pubblica modifiche sul sito</button>
+          </div>
+        </div>
       </div>
 
       <div class="panel-box">
@@ -792,10 +812,6 @@
   <div class="toast" id="toast"></div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
     document.addEventListener('DOMContentLoaded', async () => {
       const login = document.getElementById('adminLogin');
       const loginForm = document.getElementById('adminLoginForm');
@@ -930,9 +946,9 @@
       };
 
       let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-      let db = null;
-      let currentUser = null;
-      let stateDocRef = null;
+      let publishedContent = null;
+      let githubToken = sessionStorage.getItem('enricoAdminGithubToken') || '';
+      const GITHUB_CONTENTS_URL = 'https://api.github.com/repos/MrAlezz/enrico-website/contents/public/data/content.json';
 
       // ========================================================================
       // TOAST NOTIFICHE
@@ -947,77 +963,181 @@
       }
 
       // ========================================================================
-      // SINCRONIZZAZIONE IN TEMPO REALE
+      // CARICAMENTO E PUBBLICAZIONE DEI CONTENUTI DEL SITO
       // ========================================================================
+      function setSyncStatus(color, text) {
+        document.getElementById('syncDot').style.backgroundColor = color;
+        document.getElementById('syncText').textContent = text;
+      }
+
+      async function githubRequest(method = 'GET', body) {
+        const url = method === 'GET' ? `${GITHUB_CONTENTS_URL}?ref=main` : GITHUB_CONTENTS_URL;
+        const response = await fetch(url, {
+          method,
+          headers: {
+            'Accept': 'application/vnd.github+json',
+            'Authorization': `Bearer ${githubToken}`,
+            'X-GitHub-Api-Version': '2022-11-28',
+            'Content-Type': 'application/json'
+          },
+          ...(body ? { body: JSON.stringify(body) } : {})
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(result.message || `GitHub API: ${response.status}`);
+        }
+        return result;
+      }
+
+      function loadPublishedContent(content) {
+        if (!content || !content.site || !Array.isArray(content.works)) {
+          throw new Error('Il file dei contenuti del sito non ha un formato valido.');
+        }
+        publishedContent = content;
+        const featuredIds = new Set(content.featuredWorkIds || []);
+        state.settings = {
+          ...state.settings,
+          brand: content.site.homeTitle || state.settings.brand,
+          eyebrow: content.site.eyebrow || state.settings.eyebrow,
+          motto: content.site.homeSubtitle || state.settings.motto,
+          email: content.site.contactEmail || state.settings.email,
+          studio: content.site.studio || state.settings.studio,
+          contactText: content.site.contactText || state.settings.contactText,
+          bio: Array.isArray(content.site.aboutBio)
+            ? content.site.aboutBio.join('\n\n')
+            : state.settings.bio
+        };
+        state.artworks = content.works.map(work => ({
+          id: work.id,
+          title: work.title || '',
+          category: work.category || 'olio',
+          subtitle: work.details || '',
+          image: work.image || '',
+          description: work.description || '',
+          featured: featuredIds.has(work.id)
+        }));
+      }
+
+      function createPublishedContent() {
+        const oldWorks = new Map(publishedContent.works.map(work => [work.id, work]));
+        return {
+          ...publishedContent,
+          site: {
+            ...publishedContent.site,
+            homeTitle: state.settings.brand,
+            eyebrow: state.settings.eyebrow,
+            homeSubtitle: state.settings.motto,
+            contactEmail: state.settings.email,
+            studio: state.settings.studio,
+            contactText: state.settings.contactText,
+            aboutBio: state.settings.bio.split(/\n\s*\n/).map(text => text.trim()).filter(Boolean)
+          },
+          works: state.artworks.map(art => {
+            const previous = oldWorks.get(art.id);
+            return {
+              ...previous,
+              id: art.id,
+              title: art.title,
+              category: art.category,
+              technique: previous?.technique || art.category,
+              details: art.subtitle,
+              image: art.image,
+              description: art.description,
+              visible: previous?.visible !== false
+            };
+          }),
+          featuredWorkIds: state.artworks.filter(art => art.featured).map(art => art.id)
+        };
+      }
+
       async function initRealtimeSync() {
-        const syncDot = document.getElementById('syncDot');
-        const syncText = document.getElementById('syncText');
         try {
-          if (typeof __firebase_config === 'undefined') {
-            syncDot.style.backgroundColor = '#e0a952';
-            syncText.textContent = 'Modalità Locale';
-            return;
-          }
-          const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-          const firebaseConfig = JSON.parse(__firebase_config);
-          const app = initializeApp(firebaseConfig);
-          const auth = getAuth(app);
-          db = getFirestore(app);
-
-          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-            const cred = await signInWithCustomToken(auth, __initial_auth_token);
-            currentUser = cred.user;
-          } else {
-            const cred = await signInAnonymously(auth);
-            currentUser = cred.user;
-          }
-
-          if (!currentUser) return;
-          stateDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_content', 'main');
-
-          onSnapshot(stateDocRef, (snapshot) => {
-            syncDot.style.backgroundColor = '#52b788';
-            syncText.textContent = 'Sincronizzato Live';
-            if (snapshot.exists()) {
-              const remoteData = snapshot.data();
-              if (remoteData.settings) state.settings = { ...state.settings, ...remoteData.settings };
-              if (Array.isArray(remoteData.artworks)) state.artworks = remoteData.artworks;
-              renderArtworks();
-              loadSettingsForm();
-              updateCodePreview();
-            } else {
-              persistState();
+          const response = await fetch(`/data/content.json?v=${Date.now()}`, { cache: 'no-store' });
+          if (!response.ok) throw new Error(`Caricamento contenuti: HTTP ${response.status}`);
+          loadPublishedContent(await response.json());
+          if (githubToken) {
+            try {
+              await githubRequest();
+              setSyncStatus('#52b788', 'Sito caricato · GitHub collegato');
+              document.getElementById('githubTokenStatus').textContent = 'GitHub collegato per questa sessione.';
+            } catch (error) {
+              setSyncStatus('#e0a952', 'Sito caricato · verifica token GitHub');
+              document.getElementById('githubTokenStatus').textContent = `Token non valido o senza permessi: ${error.message}`;
             }
-          }, (error) => {
-            console.error('Errore sincronizzazione:', error);
-            syncDot.style.backgroundColor = '#e05252';
-            syncText.textContent = 'Errore Connessione';
-          });
+          } else {
+            setSyncStatus('#e0a952', 'Sito caricato · GitHub da collegare');
+          }
         } catch (err) {
-          console.error('Errore inizializzazione:', err);
-          syncDot.style.backgroundColor = '#e05252';
-          syncText.textContent = 'Offline';
+          console.error('Errore caricamento contenuti:', err);
+          setSyncStatus('#e05252', 'Errore caricamento contenuti');
+          showToast(`Impossibile caricare i contenuti del sito: ${err.message}`);
         }
       }
 
       async function persistState(successMessage) {
         renderArtworks();
         updateCodePreview();
-        if (stateDocRef && currentUser) {
-          try {
-            await setDoc(stateDocRef, {
-              settings: state.settings,
-              artworks: state.artworks,
-              updatedAt: Date.now()
-            });
-            if (successMessage) showToast(successMessage);
-          } catch (e) {
-            showToast('Errore di salvataggio online');
-          }
-        } else if (successMessage) {
-          showToast(successMessage);
+        if (!publishedContent) {
+          showToast('Salvataggio annullato: i contenuti del sito non sono disponibili.');
+          return;
+        }
+        if (!githubToken) {
+          setSyncStatus('#e0a952', 'GitHub da collegare per pubblicare');
+          showToast('Collega GitHub nella scheda Esporta & Backup per pubblicare le modifiche.');
+          return;
+        }
+        try {
+          const currentFile = await githubRequest();
+          const content = createPublishedContent();
+          const encodedContent = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
+          await githubRequest('PUT', {
+            message: 'CMS: aggiorna contenuti del sito',
+            content: encodedContent,
+            sha: currentFile.sha,
+            branch: 'main'
+          });
+          publishedContent = content;
+          setSyncStatus('#52b788', 'Salvato su GitHub · deploy in avvio');
+          showToast(`${successMessage || 'Contenuti pubblicati'} — il sito si aggiornerà al termine del deploy.`);
+        } catch (error) {
+          setSyncStatus('#e05252', 'Errore di pubblicazione');
+          showToast(`Salvataggio non riuscito: ${error.message}`);
         }
       }
+
+      document.getElementById('connectGithubBtn').addEventListener('click', async event => {
+        const button = event.currentTarget;
+        const tokenInput = document.getElementById('githubToken');
+        const tokenStatus = document.getElementById('githubTokenStatus');
+        const token = tokenInput.value.trim();
+        if (!token) {
+          tokenStatus.textContent = 'Inserisci un token GitHub.';
+          return;
+        }
+        const previousToken = githubToken;
+        githubToken = token;
+        button.disabled = true;
+        button.textContent = 'Verifica...';
+        tokenStatus.textContent = '';
+        try {
+          await githubRequest();
+          sessionStorage.setItem('enricoAdminGithubToken', githubToken);
+          tokenInput.value = '';
+          tokenStatus.textContent = 'GitHub collegato per questa sessione.';
+          setSyncStatus('#52b788', 'Sito caricato · GitHub collegato');
+        } catch (error) {
+          githubToken = previousToken;
+          tokenStatus.textContent = `Connessione GitHub non riuscita: ${error.message}`;
+        } finally {
+          button.disabled = false;
+          button.textContent = 'Verifica e collega GitHub';
+        }
+      });
+
+      document.getElementById('publishPendingBtn').addEventListener('click', async () => {
+        collectSettingsForm();
+        await persistState('Modifiche pubblicate');
+      });
 
       // ========================================================================
       // NAVIGAZIONE SCHEDE (TABS)
@@ -1135,17 +1255,17 @@
           const idx = state.artworks.findIndex(a => a.id === id);
           if (idx !== -1) state.artworks[idx] = payload;
           closeModal();
-          await persistState('Opera aggiornata in tempo reale!');
+          await persistState('Opera salvata');
         } else {
           state.artworks.unshift(payload);
           closeModal();
-          await persistState('Nuova opera pubblicata in tempo reale!');
+          await persistState('Nuova opera pubblicata');
         }
       });
 
       async function deleteArtwork(id) {
         state.artworks = state.artworks.filter(a => a.id !== id);
-        await persistState('Opera rimossa in tempo reale');
+        await persistState('Opera rimossa');
       }
 
       // ========================================================================
@@ -1161,7 +1281,7 @@
         document.getElementById('cfgBio').value = state.settings.bio;
       }
 
-      document.getElementById('saveSettingsBtn').addEventListener('click', async () => {
+      function collectSettingsForm() {
         state.settings.brand = document.getElementById('cfgBrand').value.trim();
         state.settings.eyebrow = document.getElementById('cfgEyebrow').value.trim();
         state.settings.motto = document.getElementById('cfgMotto').value.trim();
@@ -1169,7 +1289,11 @@
         state.settings.studio = document.getElementById('cfgStudio').value.trim();
         state.settings.contactText = document.getElementById('cfgContactText').value.trim();
         state.settings.bio = document.getElementById('cfgBio').value.trim();
-        await persistState('Testi aggiornati in tempo reale su tutto il sito!');
+      }
+
+      document.getElementById('saveSettingsBtn').addEventListener('click', async () => {
+        collectSettingsForm();
+        await persistState('Testi salvati');
       });
 
       // ========================================================================
@@ -1262,9 +1386,10 @@
       });
 
       // Avvio interfaccia e sincronizzazione
+      await initRealtimeSync();
       renderArtworks();
       loadSettingsForm();
-      await initRealtimeSync();
+      updateCodePreview();
     });
   </script>
 </body>

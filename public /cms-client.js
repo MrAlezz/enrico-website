@@ -21,10 +21,13 @@
       }
       if(d.site){
         const h=document.querySelector('.hero-content h1'); if(h) h.textContent=d.site.homeTitle||h.textContent;
+        const eyebrow=document.querySelector('#heroEyebrow'); if(eyebrow) eyebrow.textContent=d.site.eyebrow||eyebrow.textContent;
         const hs=document.querySelector('.hero-content .panel__sub--serif'); if(hs) hs.textContent=d.site.homeSubtitle||hs.textContent;
         const an=document.querySelector('.about__name'); if(an) an.textContent=d.site.aboutName||an.textContent;
         const bio=document.querySelector('.about__bio'); if(bio && Array.isArray(d.site.aboutBio)) bio.innerHTML=d.site.aboutBio.map(p=>`<p>${esc(p)}</p>`).join('');
         const email=document.querySelector('#emailText'); if(email) email.textContent=d.site.contactEmail||email.textContent;
+        const contactCopy=document.querySelector('#contactCopy'); if(contactCopy) contactCopy.textContent=d.site.contactText||contactCopy.textContent;
+        const studio=document.querySelector('#studioText'); if(studio) studio.textContent=d.site.studio||studio.textContent;
       }
       if(Array.isArray(d.aboutSections)) d.aboutSections.forEach(s=>{
         const section=document.getElementById(s.id); if(!section) return;
